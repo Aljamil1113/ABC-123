@@ -1,0 +1,71 @@
+﻿@model ABCPay.Models.ViewModels.PaymentMerchantViewModel
+@using ABCPay.Extensions
+@{
+    ViewData["Title"] = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-info">Payment Form</h2>
+
+<form method="post" asp-action="Save">
+    <div class="p-4 border rounded">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Payments.Merchant"></label>
+            </div>
+            <div class="col-5">
+                <select asp-for="@Model.Payments.MerchantId" asp-items="Model.Merchants.ToSelectListItem(Model.Payments.MerchantId)" class="form-control"></select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Payments.AccountNumber"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="@Model.Payments.AccountNumber" class="form-control" />
+            </div>
+            <span asp-validation-for="Payments.AccountNumber" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Payments.AccountName"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="@Model.Payments.AccountName" class="form-control" />
+            </div>
+            <span asp-validation-for="Payments.AccountName" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Payments.OtherDetails"></label>
+            </div>
+            <div class="col-5">
+                <textarea asp-for="@Model.Payments.OtherDetails" class="form-control"></textarea>
+            </div>
+            <span asp-validation-for="Payments.OtherDetails" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Payments.Amount"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="@Model.Payments.Amount" class="form-control" />
+            </div>
+            <span asp-validation-for="@Model.Payments.Amount" class="text-danger"></span>
+        </div>
+        <input type="hidden" asp-for="@Model.Payments.Id" class="form-control" />
+        <input type="hidden" asp-for="@Model.Payments.ReferenceNumber" class="form-control" />
+        <input type="hidden" asp-for="@Model.Payments.UserId" class="form-control" />
+        <input type="hidden" asp-for="@Model.Payments.Date" class="form-control" />
+        <input type="hidden" asp-for="@Model.Payments.StatusId" class="form-control" />
+        <br />
+
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" value="Save" />
+            <a asp-action="Index" class="btn btn-success">Cancel</a>
+        </div>
+    </div>
+</form>
+
+

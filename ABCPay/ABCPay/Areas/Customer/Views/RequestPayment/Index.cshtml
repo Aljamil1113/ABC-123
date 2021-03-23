@@ -1,0 +1,65 @@
+﻿@model IEnumerable<ABCPay.Models.Payment>
+@{ 
+    ViewData["Title"] = "Index";
+}
+
+<div class="row">
+    <div class="col-6">
+        <h2 class="text-info">Request Payments</h2>
+    </div>
+    <div class="col-6 text-right">
+        <a asp-action="New" class="btn btn-info"><i class="fas fa-plus"></i>&nbsp;New Request Payment</a>
+    </div>
+</div>
+
+<br />
+<div>
+    <table class="table table-striped" id="paymentRecords">
+        <thead>
+            <tr class="table-info">
+                <th>@Html.DisplayNameFor(p => p.Date)</th>
+                <th>@Html.DisplayNameFor(p => p.ReferenceNumber)</th>
+                <th>@Html.DisplayNameFor(p => p.Merchant)</th>
+                <th>@Html.DisplayNameFor(p => p.AccountNumber)</th>
+                <th>@Html.DisplayNameFor(p => p.AccountName)</th>
+                <th>@Html.DisplayNameFor(p => p.OtherDetails)</th>
+                <th>@Html.DisplayNameFor(p => p.Amount)</th>
+                <th>@Html.DisplayNameFor(p => p.Status)</th>
+                <th>@Html.DisplayNameFor(p => p.ServiceFee)</th>
+                <th>@Html.DisplayNameFor(p => p.PPRemarks)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>@Html.DisplayFor(p => item.Date)</td>
+                <td><a class="btn btn-link" asp-action="Edit" asp-route-id="@item.Id">@Html.DisplayFor(p => item.ReferenceNumber)</a></td>
+                <td>@Html.DisplayFor(p => item.Merchant.Name)</td>
+                <td>@Html.DisplayFor(p => item.AccountNumber)</td>
+                <td>@Html.DisplayFor(p => item.AccountName)</td>
+                <td>@Html.DisplayFor(p => item.OtherDetails)</td>
+                <td>@Html.DisplayFor(p => item.Amount)</td>
+                <td>@Html.DisplayFor(p => item.Status.Name)</td>
+                <td>@Html.DisplayFor(p => item.ServiceFee)</td>
+                <td>@Html.DisplayFor(p => item.PPRemarks)</td>
+                <td>
+                    @*<button type="button" class="btn btn-danger" data-toggle="ajax-modal"
+                data-target="#deletePayment" data-url="@Url.Action($"Delete/{item.Id}")">
+            <i class="fas fa-trash-alt"></i>
+        </button>*@
+
+                    <div>
+                        <form asp-action="Delete" asp-route-id="@item.Id" onsubmit="return jQueryAjaxDelete(this)" class="d-inline">
+                            <input type="submit" value="Delete" class="btn btn-danger" />
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            }
+        </tbody>
+       
+       
+    </table>
+</div>

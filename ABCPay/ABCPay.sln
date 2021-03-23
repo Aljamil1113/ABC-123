@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ABCPay", "ABCPay\ABCPay.csproj", "{1CE3AD4F-E56A-458B-B3E8-ED8F1FC9E833}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1CE3AD4F-E56A-458B-B3E8-ED8F1FC9E833}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CE3AD4F-E56A-458B-B3E8-ED8F1FC9E833}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CE3AD4F-E56A-458B-B3E8-ED8F1FC9E833}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CE3AD4F-E56A-458B-B3E8-ED8F1FC9E833}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0B23AD25-48DC-4B74-8439-E49902E3BA3F}
+	EndGlobalSection
+EndGlobal
