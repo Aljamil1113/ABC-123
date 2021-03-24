@@ -74,14 +74,14 @@ namespace ABCPay.Areas.Customer.Controllers
         {
             //use the following string to control your set of alphabetic characters to choose from
             //for example, you could include uppercase too
-            const string alphabet = "abcdefghijklmnopqrstuvwxyz";
+            const string alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
             // Random is not truly random,
             // so we try to encourage better randomness by always changing the seed value
             Random rnd = new Random((seed + DateTime.Now.Millisecond));
 
             // basic 5 digit random number
-            string result = rnd.Next(10000, 99999).ToString();
+            string result = rnd.Next(10000000, 99999999).ToString();
 
             // single random character in ascii range a-z
             string alphaChar = alphabet.Substring(rnd.Next(0, alphabet.Length - 1), 1);
@@ -124,7 +124,10 @@ namespace ABCPay.Areas.Customer.Controllers
             var claimsIdentity = (ClaimsIdentity)this.User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
+            var user = await db.ApplicationUsers.Where(a => a.Id == claim.Value).SingleOrDefaultAsync();
+
             int i = 0;
+            const string client = "ABC Pay";
             
             if(PaymentVM.Payments.Id == 0)
             {
@@ -135,11 +138,21 @@ namespace ABCPay.Areas.Customer.Controllers
                 PaymentVM.Payments.StatusId = 1;
 
                 db.Payments.Add(PaymentVM.Payments);
+
+                await db.Database.ExecuteSqlRawAsync("exec AddPaymentSend {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}",
+                    PaymentVM.Payments.ReferenceNumber, PaymentVM.Payments.Date, PaymentVM.Payments.AccountNumber, PaymentVM.Payments.AccountName,
+                    PaymentVM.Payments.OtherDetails, PaymentVM.Payments.Amount, PaymentVM.Payments.ServiceFee, PaymentVM.Payments.PPRemarks, client,
+                    user.FirstName + " " + user.LastName, PaymentVM.Payments.MerchantId, PaymentVM.Payments.StatusId);
             }
 
             else
             {
                 db.Payments.Update(PaymentVM.Payments);
+
+                await db.Database.ExecuteSqlRawAsync("exec EditPaymentSend {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}",
+                    PaymentVM.Payments.ReferenceNumber, PaymentVM.Payments.Date, PaymentVM.Payments.AccountNumber, PaymentVM.Payments.AccountName,
+                    PaymentVM.Payments.OtherDetails, PaymentVM.Payments.Amount, PaymentVM.Payments.ServiceFee, PaymentVM.Payments.PPRemarks, client,
+                    user.FirstName + " " + user.LastName, PaymentVM.Payments.MerchantId, PaymentVM.Payments.StatusId);
             }
 
             await db.SaveChangesAsync();
@@ -169,6 +182,7 @@ namespace ABCPay.Areas.Customer.Controllers
         {
             var payment = await db.Payments.FindAsync(id);
             db.Payments.Remove(payment);
+            await db.Database.ExecuteSqlRawAsync("exec DeletePaymentSend {0}", payment.ReferenceNumber);
             await db.SaveChangesAsync();
             return RedirectToAction("Index", "RequestPayment");
         }

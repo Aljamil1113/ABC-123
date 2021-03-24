@@ -7,21 +7,18 @@ using System.Threading.Tasks;
 
 namespace ABCPay.Models
 {
-    public class Payment
+    public class PaymentSend
     {
-        [Column("PaymentId")]
-        public int Id { get; set; }
-
-        [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime Date { get; set; }
-
-
-        
+        [Key]
         [Required]
         [StringLength(8)]
         [Display(Name = "Reference Number")]
         public string ReferenceNumber { get; set; }
+
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime Date { get; set; }
 
 
         [Display(Name = "Account Number")]
@@ -30,7 +27,7 @@ namespace ABCPay.Models
 
 
         [Display(Name = "Account Name")]
-        [StringLength(20)]
+        [StringLength(50)]
         [Required]
         public string AccountName { get; set; }
 
@@ -51,6 +48,12 @@ namespace ABCPay.Models
         [Display(Name = "Payment Remarks")]
         public string PPRemarks { get; set; }
 
+        [StringLength(50)]
+        public string Client { get; set; }
+
+        [StringLength(50)]
+        public string Customer { get; set; }
+
 
         [Display(Name = "Merchant")]
         public int MerchantId { get; set; }
@@ -62,11 +65,5 @@ namespace ABCPay.Models
         public int StatusId { get; set; }
         [ForeignKey("StatusId")]
         public Status Status { get; set; }
-
-
-        public string UserId { get; set; }
-
-        [ForeignKey("UserId")]
-        public virtual ApplicationUser ApplicationUser { get; set; }
     }
 }
