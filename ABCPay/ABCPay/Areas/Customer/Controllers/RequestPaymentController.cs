@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace ABCPay.Areas.Customer.Controllers
@@ -15,6 +16,7 @@ namespace ABCPay.Areas.Customer.Controllers
     public class RequestPaymentController : Controller
     {
         private readonly ApplicationDbContext db;
+        private int PageSize = 3;
 
         [BindProperty]
         public PaymentMerchantViewModel PaymentVM { get; set; }
@@ -29,21 +31,43 @@ namespace ABCPay.Areas.Customer.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(int productPage = 1)
         {
             System.Security.Claims.ClaimsPrincipal currentUser = this.User;
             var claimsIdentity = (ClaimsIdentity)this.User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
-            var payments = db.Payments.Where(p => p.UserId == claim.Value).Include(m => m.Merchant)
+            RequestPaymentViewModel RequestPaymentVM = new RequestPaymentViewModel()
+            {
+                Payments = new List<Payment>()
+            };
+
+            StringBuilder param = new StringBuilder();
+
+            param.Append("/Customer/RequestPayment?productPage=:");
+
+            RequestPaymentVM.Payments = db.Payments.Where(p => p.UserId == claim.Value).Include(m => m.Merchant)
                 .Include(s => s.Status).ToList();
 
-            if (payments == null)
+            if (RequestPaymentVM.Payments == null)
             {
                 return View();
             }
 
-            return View(payments);
+            var count = RequestPaymentVM.Payments.Count;
+
+            RequestPaymentVM.Payments = RequestPaymentVM.Payments.OrderBy(p => p.Date)
+                .Skip((productPage - 1) * PageSize).Take(PageSize).ToList();
+
+            RequestPaymentVM.PagingInfo = new PagingInfo
+            {
+                CurrentPage = productPage,
+                ItemsPerPage = PageSize,
+                TotalItems = count,
+                urlParam = param.ToString()
+            };
+
+            return View(RequestPaymentVM);
         }
 
         private string GetRandomString(int seed)
