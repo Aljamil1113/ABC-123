@@ -9,19 +9,15 @@ namespace ABCPay.Models
 {
     public class Payment
     {
-        [Column("PaymentId")]
-        public int Id { get; set; }
-
-        [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime Date { get; set; }
-
-
-        
+        [Key]
         [Required]
         [StringLength(8)]
         [Display(Name = "Reference Number")]
         public string ReferenceNumber { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime Date { get; set; }
 
 
         [Display(Name = "Account Number")]
@@ -50,6 +46,13 @@ namespace ABCPay.Models
 
         [Display(Name = "Payment Remarks")]
         public string PPRemarks { get; set; }
+
+
+        [StringLength(50)]
+        public string Client { get; set; }
+
+        [StringLength(50)]
+        public string Customer { get; set; }
 
 
         [Display(Name = "Merchant")]

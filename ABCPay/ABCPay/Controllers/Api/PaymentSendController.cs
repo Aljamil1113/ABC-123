@@ -22,19 +22,41 @@ namespace ABCPay.Controllers.Api
 
         [HttpGet]
         [ProducesResponseType(400)]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<PaymentSend>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<PaymentDto>))]
         public IActionResult GetPaymentSend()
         {
             var paymentSends = paymentServices.GetPaymentSends();
 
-            return Ok(paymentSends);
+            var paymentDtos = new List<PaymentDto>();
+
+            foreach (var item in paymentSends)
+            {
+                paymentDtos.Add(new PaymentDto
+                {
+                    ReferenceNumber = item.ReferenceNumber,
+                    Date = item.Date,
+                    AccountNumber = item.AccountNumber,
+                    AccountName = item.AccountName,
+                    OtherDetails = item.OtherDetails,
+                    Amount = item.Amount,
+                    ServiceFee = item.ServiceFee,
+                    PPRemarks = item.PPRemarks,
+                    Client = item.Client,
+                    Customer = item.Customer,
+                    MerchantId = item.MerchantId,
+                    StatusId = item.StatusId,
+                    UserId = item.UserId
+                });
+            }
+
+            return Ok(paymentDtos);
         }
 
 
         [HttpGet("{id}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        [ProducesResponseType(200, Type = typeof(PaymentSend))]
+        [ProducesResponseType(200, Type = typeof(Payment))]
         public IActionResult GetPaymentSend(string id)
         {
             if(!paymentServices.IsPaymentSendExist(id))
@@ -49,7 +71,53 @@ namespace ABCPay.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            return Ok(paymentSend);
+            PaymentDto paymentDto = new PaymentDto()
+            {
+                ReferenceNumber = paymentSend.ReferenceNumber,
+                Date = paymentSend.Date,
+                AccountNumber = paymentSend.AccountNumber,
+                AccountName = paymentSend.AccountName,
+                OtherDetails = paymentSend.OtherDetails,
+                Amount = paymentSend.Amount,
+                ServiceFee = paymentSend.ServiceFee,
+                PPRemarks = paymentSend.PPRemarks,
+                Client = paymentSend.Client,
+                Customer = paymentSend.Customer,
+                MerchantId = paymentSend.MerchantId,
+                StatusId = paymentSend.StatusId,
+                UserId = paymentSend.UserId
+            };
+
+            return Ok(paymentDto);
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(422)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        public IActionResult UpdatePaymentSend(string id, [FromBody]Payment paymentSend)
+        {
+            if (paymentSend == null)
+                return BadRequest(ModelState);
+
+            if (id != paymentSend.ReferenceNumber)
+                return BadRequest(ModelState);
+
+            if (!paymentServices.IsPaymentSendExist(id))
+                return NotFound();
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if(!paymentServices.UpdatePaymentSend(paymentSend))
+            {
+                ModelState.AddModelError("", $"Something went wrong updating {paymentSend.AccountNumber} - {paymentSend.AccountName}...");
+                return StatusCode(500, ModelState);
+            }
+
+            return NoContent();
         }
 
     }

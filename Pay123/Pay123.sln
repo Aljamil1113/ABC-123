@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pay123", "Pay123\Pay123.csproj", "{AD076118-9920-4B35-BA10-4C657F18975D}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Pay123SqlScripts", "Pay123SqlScripts\Pay123SqlScripts.sqlproj", "{8C1A655D-62A7-4E32-967D-6F7E6D0EF7C3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AD076118-9920-4B35-BA10-4C657F18975D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD076118-9920-4B35-BA10-4C657F18975D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD076118-9920-4B35-BA10-4C657F18975D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD076118-9920-4B35-BA10-4C657F18975D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C1A655D-62A7-4E32-967D-6F7E6D0EF7C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C1A655D-62A7-4E32-967D-6F7E6D0EF7C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C1A655D-62A7-4E32-967D-6F7E6D0EF7C3}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{8C1A655D-62A7-4E32-967D-6F7E6D0EF7C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C1A655D-62A7-4E32-967D-6F7E6D0EF7C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C1A655D-62A7-4E32-967D-6F7E6D0EF7C3}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E0843203-FA5A-4DF2-A50B-2AE393B84A06}
+	EndGlobalSection
+EndGlobal

@@ -61,7 +61,6 @@
     <Folder Include="dbo\" />
     <Folder Include="dbo\Tables\" />
     <Folder Include="Publish" />
-    <Folder Include="dbo\Stored Procedures" />
     <Folder Include="Compare" />
   </ItemGroup>
   <ItemGroup>
@@ -76,8 +75,6 @@
     <Build Include="dbo\Tables\Merchants.sql" />
     <Build Include="dbo\Tables\Statuses.sql" />
     <Build Include="dbo\Tables\Payments.sql" />
-    <Build Include="dbo\Tables\PaymentSends.sql" />
-    <Build Include="dbo\Stored Procedures\AddPaymentSend.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Publish\ABCPayScripts.publish.xml" />

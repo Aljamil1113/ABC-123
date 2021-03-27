@@ -15,19 +15,48 @@ namespace ABCPay.Services
         {
             db = _db;
         }
-        public ICollection<PaymentSend> GetPaymentSends()
+        public ICollection<Payment> GetPaymentSends()
         {
-            return db.PaymentSends.OrderBy(p => p.Date).ToList();
+            return db.Payments.OrderBy(p => p.Date).ToList();
         }
 
-        public PaymentSend GetPaymentSend(string id)
+        public Payment GetPaymentSend(string id)
         {
-            return db.PaymentSends.Where(p => p.ReferenceNumber == id).FirstOrDefault();
+            return db.Payments.Where(p => p.ReferenceNumber == id).FirstOrDefault();
         }
 
         public bool IsPaymentSendExist(string id)
         {
-            return db.PaymentSends.Any(p => p.ReferenceNumber == id);
+            return db.Payments.Any(p => p.ReferenceNumber == id);
         }
+
+        public bool SavePaymentSend()
+        {
+            var payment = db.SaveChanges();
+
+            return payment >= 0 ? true : false;
+        }
+
+        public bool UpdatePaymentSend(Payment paymentSend)
+        {
+            db.Update(paymentSend);
+
+            return SavePaymentSend();
+        }
+
+
+        //public bool IsPaymentExist(string id)
+        //{
+        //    return db.Payments.Any(p => p.ReferenceNumber == id);
+        //}
+
+        //public bool UpdatePayment(Payment payment)
+        //{
+        //    db.Update(payment);
+
+        //    return SavePaymentSend();
+        //}
+
+       
     }
 }

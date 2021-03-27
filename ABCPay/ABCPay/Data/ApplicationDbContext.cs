@@ -18,7 +18,5 @@ namespace ABCPay.Data
         public DbSet<Merchant> Merchants { get; set; }
         public DbSet<Status> Statuses { get; set; }
         public DbSet<Payment> Payments { get; set; }
-
-        public DbSet<PaymentSend> PaymentSends { get; set; }
     }
 }

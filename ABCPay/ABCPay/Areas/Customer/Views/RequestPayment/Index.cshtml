@@ -42,7 +42,7 @@
                 {
                     <tr>
                         <td>@Html.DisplayFor(p => item.Date)</td>
-                        <td><a class="btn btn-link" asp-action="Edit" asp-route-id="@item.Id">@Html.DisplayFor(p => item.ReferenceNumber)</a></td>
+                        <td><a class="btn btn-link" asp-action="Edit" asp-route-id="@item.ReferenceNumber">@Html.DisplayFor(p => item.ReferenceNumber)</a></td>
                         <td>@Html.DisplayFor(p => item.Merchant.Name)</td>
                         <td>@Html.DisplayFor(p => item.AccountNumber)</td>
                         <td>@Html.DisplayFor(p => item.AccountName)</td>
@@ -59,7 +59,7 @@
                             </button>*@
 
                             <div>
-                                <form asp-action="Delete" asp-route-id="@item.Id" onsubmit="return jQueryAjaxDelete(this)" class="d-inline">
+                                <form asp-action="Delete" asp-route-id="@item.ReferenceNumber" onsubmit="return jQueryAjaxDelete(this)" class="d-inline">
                                     <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
                                 </form>
                             </div>

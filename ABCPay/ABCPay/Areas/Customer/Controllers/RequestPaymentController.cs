@@ -100,14 +100,14 @@ namespace ABCPay.Areas.Customer.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            PaymentVM.Payments = await db.Payments.FindAsync(id);
+            PaymentVM.Payments = await db.Payments.Where(p => p.ReferenceNumber == id).SingleOrDefaultAsync();
 
             if (PaymentVM.Payments == null)
             {
@@ -128,8 +128,12 @@ namespace ABCPay.Areas.Customer.Controllers
 
             int i = 0;
             const string client = "ABC Pay";
-            
-            if(PaymentVM.Payments.Id == 0)
+
+            PaymentVM.Payments.Client = client;
+            PaymentVM.Payments.Customer = user.FirstName + " " + user.LastName;
+
+
+            if (PaymentVM.Payments.ReferenceNumber == null)
             {
                 i++;
                 PaymentVM.Payments.ReferenceNumber = GetRandomString(i);
@@ -138,51 +142,40 @@ namespace ABCPay.Areas.Customer.Controllers
                 PaymentVM.Payments.StatusId = 1;
 
                 db.Payments.Add(PaymentVM.Payments);
-
-                await db.Database.ExecuteSqlRawAsync("exec AddPaymentSend {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}",
-                    PaymentVM.Payments.ReferenceNumber, PaymentVM.Payments.Date, PaymentVM.Payments.AccountNumber, PaymentVM.Payments.AccountName,
-                    PaymentVM.Payments.OtherDetails, PaymentVM.Payments.Amount, PaymentVM.Payments.ServiceFee, PaymentVM.Payments.PPRemarks, client,
-                    user.FirstName + " " + user.LastName, PaymentVM.Payments.MerchantId, PaymentVM.Payments.StatusId);
             }
 
             else
             {
                 db.Payments.Update(PaymentVM.Payments);
-
-                await db.Database.ExecuteSqlRawAsync("exec EditPaymentSend {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}",
-                    PaymentVM.Payments.ReferenceNumber, PaymentVM.Payments.Date, PaymentVM.Payments.AccountNumber, PaymentVM.Payments.AccountName,
-                    PaymentVM.Payments.OtherDetails, PaymentVM.Payments.Amount, PaymentVM.Payments.ServiceFee, PaymentVM.Payments.PPRemarks, client,
-                    user.FirstName + " " + user.LastName, PaymentVM.Payments.MerchantId, PaymentVM.Payments.StatusId);
             }
 
             await db.SaveChangesAsync();
             return RedirectToAction("Index", "RequestPayment");
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if(id == null)
-            {
-                return NotFound();
-            }
+        //[HttpGet]
+        //public async Task<IActionResult> Delete(string id)
+        //{
+        //    if(id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            PaymentVM.Payments = await db.Payments.FindAsync(id);
+        //    PaymentVM.Payments = await db.Payments.Where(p => p.ReferenceNumber == id).SingleOrDefaultAsync();
 
-            if(PaymentVM.Payments == null)
-            {
-                return NotFound();
-            }
+        //    if(PaymentVM.Payments == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return PartialView("_DeleteEmployeePartial", PaymentVM.Payments);
-        }
+        //    return PartialView("_DeleteEmployeePartial", PaymentVM.Payments);
+        //}
 
         [HttpPost]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(string id)
         {
-            var payment = await db.Payments.FindAsync(id);
+            var payment = await db.Payments.Where(p => p.ReferenceNumber == id).SingleOrDefaultAsync();
             db.Payments.Remove(payment);
-            await db.Database.ExecuteSqlRawAsync("exec DeletePaymentSend {0}", payment.ReferenceNumber);
             await db.SaveChangesAsync();
             return RedirectToAction("Index", "RequestPayment");
         }
