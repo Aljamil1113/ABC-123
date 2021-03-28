@@ -12,26 +12,23 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PagedList;
 
 namespace Pay123
 {
     public partial class Payment123 : Form
     {
-        private Payment paymentSend = new Payment();
         private readonly Pay123Db db;
+        private Payment paymentSend;
+        private IPagedList<Payment> paymentLists;
+        private int pageNumber = 1;
+        private int pageSize = 3;
         public Payment123()
         {
             InitializeComponent();
             db = new Pay123Db();
-            LoadData();
+            paymentSend = new Payment();
         }
-
-        public async void LoadData()
-        {
-            paymentDataGridView.DataSource = await RestService.GetPayments();
-            paymentDataGridView.Columns["UserId"].Visible = false;
-        }
-
         
 
         private void paymentDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -82,7 +79,55 @@ namespace Pay123
         private void btnRefreshPay_Click(object sender, EventArgs e)
         {
             paymentDataGridView.Refresh();
-            LoadData();
+            Payment123_Load(sender, e);
+        }
+
+        public async Task<IPagedList<Payment>> LoadDataAsync()
+        {
+            List<Payment> payments = (List<Payment>)await RestService.GetPayments();
+            return await Task.Factory.StartNew(() =>
+            {
+                return payments.ToPagedList(pageNumber, pageSize);
+            });
+        }
+
+        private async void Payment123_Load(object sender, EventArgs e)
+        {
+            paymentLists = await LoadDataAsync();
+            btnPreviousPayment.Enabled = paymentLists.HasPreviousPage;
+            btnNextPayment.Enabled = paymentLists.HasNextPage;
+            paymentDataGridView.DataSource = paymentLists.ToList();
+            paymentDataGridView.Columns["UserId"].Visible = false;
+            lblPagePayment.Text = string.Format("Page {0}/{1}", pageNumber, paymentLists.PageCount);
+
+        }
+
+        private async void btnPreviousPayment_Click(object sender, EventArgs e)
+        {
+            if(paymentLists.HasPreviousPage)
+            {
+                --pageNumber;
+                paymentLists = await LoadDataAsync();
+                btnPreviousPayment.Enabled = paymentLists.HasPreviousPage;
+                btnNextPayment.Enabled = paymentLists.HasNextPage;
+                paymentDataGridView.DataSource = paymentLists.ToList();
+                paymentDataGridView.Columns["UserId"].Visible = false;
+                lblPagePayment.Text = string.Format("Page {0}/{1}", pageNumber, paymentLists.PageCount);
+            }
+        }
+
+        private async void btnNextPayment_Click(object sender, EventArgs e)
+        {
+            if(paymentLists.HasNextPage)
+            {
+                ++pageNumber;
+                paymentLists = await LoadDataAsync();
+                btnPreviousPayment.Enabled = paymentLists.HasPreviousPage;
+                btnNextPayment.Enabled = paymentLists.HasNextPage;
+                paymentDataGridView.DataSource = paymentLists.ToList();
+                paymentDataGridView.Columns["UserId"].Visible = false;
+                lblPagePayment.Text = string.Format("Page {0}/{1}", pageNumber, paymentLists.PageCount);
+            }
         }
     }
 }
