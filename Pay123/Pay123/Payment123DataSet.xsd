@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Payment123DataSet" targetNamespace="http://tempuri.org/Payment123DataSet.xsd" xmlns:mstns="http://tempuri.org/Payment123DataSet.xsd" xmlns="http://tempuri.org/Payment123DataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="Pay123Db" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="Pay123Db (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.Pay123.Properties.Settings.GlobalReference.Default.Pay123Db" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="PaymentsStatusMerchantTableAdapter" GeneratorDataComponentClassName="PaymentsStatusMerchantTableAdapter" Name="PaymentsStatusMerchant" UserDataComponentName="PaymentsStatusMerchantTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="Pay123Db (Settings)" DbObjectName="Payment123.dbo.PaymentsStatusMerchant" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT Date, ReferenceNumber, MerchantName, Client, Customer, AccountNumber, AccountName, OtherDetails, Amount, ServiceFee, PPRemarks, StatusName FROM dbo.PaymentsStatusMerchant</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="Date" DataSetColumn="Date" />
+              <Mapping SourceColumn="ReferenceNumber" DataSetColumn="ReferenceNumber" />
+              <Mapping SourceColumn="MerchantName" DataSetColumn="MerchantName" />
+              <Mapping SourceColumn="Client" DataSetColumn="Client" />
+              <Mapping SourceColumn="Customer" DataSetColumn="Customer" />
+              <Mapping SourceColumn="AccountNumber" DataSetColumn="AccountNumber" />
+              <Mapping SourceColumn="AccountName" DataSetColumn="AccountName" />
+              <Mapping SourceColumn="OtherDetails" DataSetColumn="OtherDetails" />
+              <Mapping SourceColumn="Amount" DataSetColumn="Amount" />
+              <Mapping SourceColumn="ServiceFee" DataSetColumn="ServiceFee" />
+              <Mapping SourceColumn="PPRemarks" DataSetColumn="PPRemarks" />
+              <Mapping SourceColumn="StatusName" DataSetColumn="StatusName" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="Payment123DataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="Payment123DataSet" msprop:Generator_UserDSName="Payment123DataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="PaymentsStatusMerchant" msprop:Generator_TableClassName="PaymentsStatusMerchantDataTable" msprop:Generator_TableVarName="tablePaymentsStatusMerchant" msprop:Generator_TablePropName="PaymentsStatusMerchant" msprop:Generator_RowDeletingName="PaymentsStatusMerchantRowDeleting" msprop:Generator_RowChangingName="PaymentsStatusMerchantRowChanging" msprop:Generator_RowEvHandlerName="PaymentsStatusMerchantRowChangeEventHandler" msprop:Generator_RowDeletedName="PaymentsStatusMerchantRowDeleted" msprop:Generator_UserTableName="PaymentsStatusMerchant" msprop:Generator_RowChangedName="PaymentsStatusMerchantRowChanged" msprop:Generator_RowEvArgName="PaymentsStatusMerchantRowChangeEvent" msprop:Generator_RowClassName="PaymentsStatusMerchantRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Date" msprop:Generator_ColumnVarNameInTable="columnDate" msprop:Generator_ColumnPropNameInRow="Date" msprop:Generator_ColumnPropNameInTable="DateColumn" msprop:Generator_UserColumnName="Date" type="xs:dateTime" />
+              <xs:element name="ReferenceNumber" msprop:Generator_ColumnVarNameInTable="columnReferenceNumber" msprop:Generator_ColumnPropNameInRow="ReferenceNumber" msprop:Generator_ColumnPropNameInTable="ReferenceNumberColumn" msprop:Generator_UserColumnName="ReferenceNumber">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="MerchantName" msprop:Generator_ColumnVarNameInTable="columnMerchantName" msprop:Generator_ColumnPropNameInRow="MerchantName" msprop:Generator_ColumnPropNameInTable="MerchantNameColumn" msprop:Generator_UserColumnName="MerchantName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Client" msprop:Generator_ColumnVarNameInTable="columnClient" msprop:Generator_ColumnPropNameInRow="Client" msprop:Generator_ColumnPropNameInTable="ClientColumn" msprop:Generator_UserColumnName="Client" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Customer" msprop:Generator_ColumnVarNameInTable="columnCustomer" msprop:Generator_ColumnPropNameInRow="Customer" msprop:Generator_ColumnPropNameInTable="CustomerColumn" msprop:Generator_UserColumnName="Customer" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AccountNumber" msprop:Generator_ColumnVarNameInTable="columnAccountNumber" msprop:Generator_ColumnPropNameInRow="AccountNumber" msprop:Generator_ColumnPropNameInTable="AccountNumberColumn" msprop:Generator_UserColumnName="AccountNumber">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AccountName" msprop:Generator_ColumnVarNameInTable="columnAccountName" msprop:Generator_ColumnPropNameInRow="AccountName" msprop:Generator_ColumnPropNameInTable="AccountNameColumn" msprop:Generator_UserColumnName="AccountName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="OtherDetails" msprop:Generator_ColumnVarNameInTable="columnOtherDetails" msprop:Generator_ColumnPropNameInRow="OtherDetails" msprop:Generator_ColumnPropNameInTable="OtherDetailsColumn" msprop:Generator_UserColumnName="OtherDetails" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Amount" msprop:Generator_ColumnVarNameInTable="columnAmount" msprop:Generator_ColumnPropNameInRow="Amount" msprop:Generator_ColumnPropNameInTable="AmountColumn" msprop:Generator_UserColumnName="Amount" type="xs:decimal" />
+              <xs:element name="ServiceFee" msprop:Generator_ColumnVarNameInTable="columnServiceFee" msprop:Generator_ColumnPropNameInRow="ServiceFee" msprop:Generator_ColumnPropNameInTable="ServiceFeeColumn" msprop:Generator_UserColumnName="ServiceFee" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PPRemarks" msprop:Generator_ColumnVarNameInTable="columnPPRemarks" msprop:Generator_ColumnPropNameInRow="PPRemarks" msprop:Generator_ColumnPropNameInTable="PPRemarksColumn" msprop:Generator_UserColumnName="PPRemarks" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="StatusName" msprop:Generator_ColumnVarNameInTable="columnStatusName" msprop:Generator_ColumnPropNameInRow="StatusName" msprop:Generator_ColumnPropNameInTable="StatusNameColumn" msprop:Generator_UserColumnName="StatusName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:PaymentsStatusMerchant" />
+      <xs:field xpath="mstns:ReferenceNumber" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

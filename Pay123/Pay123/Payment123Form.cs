@@ -22,7 +22,7 @@ namespace Pay123
         private Payment paymentSend;
         private IPagedList<Payment> paymentLists;
         private int pageNumber = 1;
-        private int pageSize = 3;
+        private int pageSize = 10;
         public Payment123()
         {
             InitializeComponent();
@@ -85,6 +85,13 @@ namespace Pay123
         public async Task<IPagedList<Payment>> LoadDataAsync()
         {
             List<Payment> payments = (List<Payment>)await RestService.GetPayments();
+
+            //if (payments == null)
+            //{
+            //    MessageBox.Show("There are no data's", "No Connection", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //    this.Close();
+            //}
+
             return await Task.Factory.StartNew(() =>
             {
                 return payments.ToPagedList(pageNumber, pageSize);
@@ -94,6 +101,7 @@ namespace Pay123
         private async void Payment123_Load(object sender, EventArgs e)
         {
             paymentLists = await LoadDataAsync();
+
             btnPreviousPayment.Enabled = paymentLists.HasPreviousPage;
             btnNextPayment.Enabled = paymentLists.HasNextPage;
             paymentDataGridView.DataSource = paymentLists.ToList();

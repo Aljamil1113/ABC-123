@@ -60,15 +60,24 @@
     <Folder Include="dbo\Tables" />
     <Folder Include="Publish" />
     <Folder Include="Compare" />
+    <Folder Include="dbo\Views" />
+    <Folder Include="DML" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Users.sql" />
     <Build Include="dbo\Tables\Merchants.sql" />
     <Build Include="dbo\Tables\Statuses.sql" />
     <Build Include="dbo\Tables\Payments.sql" />
+    <Build Include="dbo\Views\PaymentsStatusMerchant.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Publish\Pay123SqlScripts.publish.xml" />
     <None Include="Compare\Pay123Compare.scmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="Pay123SqlScripts.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <PreDeploy Include="DML\UserDML.sql" />
   </ItemGroup>
 </Project>

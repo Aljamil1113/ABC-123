@@ -14,9 +14,10 @@ namespace Pay123
         [STAThread]
         static void Main()
         {
+            SqlServerTypes.Utilities.LoadNativeAssemblies(AppDomain.CurrentDomain.BaseDirectory);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Payment123());
+            Application.Run(new LogInForm());
         }
     }
 }
