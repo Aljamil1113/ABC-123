@@ -3,69 +3,99 @@
 
 // Write your JavaScript code.
 
-$(function () {
-    var PlaceHolderElement = $('#PlaceHolderHere');
-    $('button[data-toggle="ajax-modal"]').click(function (event) {
+$(document).ready(function () {
 
-        var url = $(this).data('url');
-        var decodeUrl = decodeURIComponent(url);
-        $.get(decodeUrl).done(function (data) {
-                PlaceHolderElement.html(data);
-                PlaceHolderElement.find('.modal').modal('show');
-        })
-    })
+$((function () {
+    var url;
+    var redirectUrl;
+    var target;
 
-    PlaceHolderElement.on('click', '[data-save="modal"]', function (event) {
-        event.preventDefault();
-        var form = $(this).parents('.modal').find('form');
-        var actionUrl = form.attr('action');
-        var sendData = form.serialize();
-        $.post(actionUrl, sendData).done(function (data) {
-            PlaceHolderElement.find('.modal').modal('hide');
-        })
-    })
-})
+    $('body').append(`
+                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel"></h4>
+                        </div>
+                        <div class="modal-body delete-modal-body">
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" id="cancel-delete">Cancel</button>
+                            <button type="button" class="btn btn-danger" id="confirm-delete">Delete</button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>`);
 
+    //Delete Action
+    $(".delete").on('click', (e) => {
+        e.preventDefault();
 
-showInPopup = (url, title) => {
-    $.ajax({
-        type: 'GET',
-        url: url,
-        success: function (res) {
-            $('#form-modal .modal-body').html(res);
-            $('#form-modal .modal-title').html(title);
-            $('#form-modal').modal('show');
-        }
-    })
-}
+        target = e.target;
+        var Id = $(target).data('id');
+        var controller = $(target).data('controller');
+        var action = $(target).data('action');
+        var bodyMessage = $(target).data('body-message');
+        redirectUrl = $(target).data('redirect-url');
 
+        url = "/" + controller + "/" + action + "?id=" + Id;
+        $(".delete-modal-body").text(bodyMessage);
+        $("#deleteModal").modal('show');
+    });
 
-jQueryAjaxDelete = form => {
-    var table = $("#paymentRecords");
-    if (confirm('Are you sure to delete this record ?')) {
-        try {
-            $.ajax({
-                type: 'POST',
-                url: form.action,
-                data: new FormData(form),
-                contentType: false,
-                processData: false,
-                success: function (res) {
-                    res.parents('tr').remove();
-                },
-                error: function (err) {
-                    console.log(err)
+    $("#confirm-delete").on('click', () => {
+        $.get(url)
+            .done((result) => {
+                if (!redirectUrl) {
+                    return $(target).parent().parent().hide("slow");
                 }
+                window.location.href = redirectUrl;
             })
-        } catch (ex) {
-            console.log(ex)
+            .fail((error) => {
+                if (redirectUrl)
+                    window.location.href = redirectUrl;
+            }).always(() => {
+                $("#deleteModal").modal('hide');
+            });
+    });
+
+}()));
+
+
+
+
+    jQueryAjaxDelete = form => {
+        if (confirm('Are you sure to delete this record ?')) {
+            try {
+                $.ajax({
+                    type: 'POST',
+                    url: form.action,
+                    data: new FormData(form),
+                    contentType: false,
+                    processData: false,
+                    success: function (res) {
+                        location.reload(true);
+                        //$('#viewAll').html(res.html);
+                        //table.parents('tr').remove();
+                    },
+                    error: function (err) {
+                        console.log(err)
+                    }
+                })
+            } catch (ex) {
+                console.log(ex)
+            }
         }
+
+        //prevent default form submit event
+        return false;
     }
 
-    //prevent default form submit event
-    return false;
-}
 
-function deleteItem(form) {
-    $(form).parents('li').remove();
-}
+
+
+
+
+});

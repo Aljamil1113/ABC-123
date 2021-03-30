@@ -1,10 +1,13 @@
 ﻿using ABCPay.Data;
 using ABCPay.Models;
 using ABCPay.Models.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -16,7 +19,7 @@ namespace ABCPay.Areas.Customer.Controllers
     public class RequestPaymentController : Controller
     {
         private readonly ApplicationDbContext db;
-        private int PageSize = 3;
+        private int PageSize = 10;
 
         [BindProperty]
         public PaymentMerchantViewModel PaymentVM { get; set; }
@@ -153,26 +156,82 @@ namespace ABCPay.Areas.Customer.Controllers
             return RedirectToAction("Index", "RequestPayment");
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Delete(string id)
-        //{
-        //    if(id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        [HttpGet]
+        public IActionResult Import()
+        {
+            return View("ImportForm", PaymentVM);
+        }
 
-        //    PaymentVM.Payments = await db.Payments.Where(p => p.ReferenceNumber == id).SingleOrDefaultAsync();
+        public async Task<IActionResult> ImportExcel(IFormFile file)
+        {
+            var listPayments = new List<Payment>();
 
-        //    if(PaymentVM.Payments == null)
-        //    {
-        //        return NotFound();
-        //    }
+            System.Security.Claims.ClaimsPrincipal currentUser = this.User;
+            var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
-        //    return PartialView("_DeleteEmployeePartial", PaymentVM.Payments);
-        //}
+            var user = await db.ApplicationUsers.Where(a => a.Id == claim.Value).SingleOrDefaultAsync();
+
+            const string client = "ABC Pay";
+            string customer = user.FirstName + " " + user.LastName;
+
+
+            using (var stream = new MemoryStream())
+            {
+                await file.CopyToAsync(stream);
+                using(var package = new ExcelPackage(stream))
+                {
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+                    var rowCount = worksheet.Dimension.Rows;
+                    for (int row = 2; row <= rowCount; row++)
+                    {
+                        listPayments.Add(new Payment
+                        {
+                            ReferenceNumber = GetRandomString(row),
+                            Date = DateTime.Now,
+                            Client = client,
+                            Customer = customer,
+                            UserId = claim.Value,
+                            StatusId = 1,
+                            MerchantId = Convert.ToInt32(worksheet.Cells[row, 1].Value),
+                            AccountNumber = worksheet.Cells[row, 2].Value.ToString(),
+                            AccountName = worksheet.Cells[row, 3].Value.ToString(),
+                            OtherDetails = worksheet.Cells[row, 4].Value.ToString(),
+                            Amount = Convert.ToDecimal(worksheet.Cells[row, 5].Value)
+                        });
+
+                    }
+                }
+            }
+
+            if(ModelState.IsValid)
+            {
+                db.Payments.AddRange(listPayments);
+                await db.SaveChangesAsync();
+            }
+            return RedirectToAction("Index", "RequestPayment");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            PaymentVM.Payments = await db.Payments.Where(p => p.ReferenceNumber == id).SingleOrDefaultAsync();
+
+            if (PaymentVM.Payments == null)
+            {
+                return NotFound();
+            }
+
+            return PartialView("DeletePayment", PaymentVM.Payments);
+        }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> DeletePayment(string id)
         {
             var payment = await db.Payments.Where(p => p.ReferenceNumber == id).SingleOrDefaultAsync();
             db.Payments.Remove(payment);
