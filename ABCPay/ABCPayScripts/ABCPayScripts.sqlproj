@@ -60,9 +60,9 @@
     <Folder Include="Properties" />
     <Folder Include="dbo\" />
     <Folder Include="dbo\Tables\" />
-    <Folder Include="Publish" />
     <Folder Include="Compare" />
     <Folder Include="dbo\Views" />
+    <Folder Include="DML" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\__EFMigrationsHistory.sql" />
@@ -79,7 +79,10 @@
     <Build Include="dbo\Views\PaymentMS.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Publish\ABCPayScripts.publish.xml" />
     <None Include="Compare\SqlABCCompare.scmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <PreDeploy Include="DML\MerchantDML.sql" />
+    <None Include="DML\StatusDML.sql" />
   </ItemGroup>
 </Project>
