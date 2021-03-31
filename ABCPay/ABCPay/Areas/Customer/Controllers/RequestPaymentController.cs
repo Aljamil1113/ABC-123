@@ -2,6 +2,7 @@
 using ABCPay.Models;
 using ABCPay.Models.ViewModels;
 using ABCPay.Models.Views;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,7 @@ using System.Threading.Tasks;
 namespace ABCPay.Areas.Customer.Controllers
 {
     [Area("Customer")]
+    [Authorize]
     public class RequestPaymentController : Controller
     {
         private readonly ApplicationDbContext db;
@@ -192,12 +194,12 @@ namespace ABCPay.Areas.Customer.Controllers
                             Client = client,
                             Customer = customer,
                             UserId = claim.Value,
-                            StatusId = 1,
                             MerchantId = Convert.ToInt32(worksheet.Cells[row, 1].Value),
                             AccountNumber = worksheet.Cells[row, 2].Value.ToString(),
                             AccountName = worksheet.Cells[row, 3].Value.ToString(),
                             OtherDetails = worksheet.Cells[row, 4].Value.ToString(),
-                            Amount = Convert.ToDecimal(worksheet.Cells[row, 5].Value)
+                            Amount = Convert.ToDecimal(worksheet.Cells[row, 5].Value),
+                            StatusId = Convert.ToInt32(worksheet.Cells[row, 6].Value)
                         });
 
                     }

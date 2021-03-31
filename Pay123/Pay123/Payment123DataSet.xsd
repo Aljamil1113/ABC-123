@@ -12,7 +12,7 @@
               <DbSource ConnectionRef="Pay123Db (Settings)" DbObjectName="Payment123.dbo.PaymentsStatusMerchant" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
-                    <CommandText>SELECT Date, ReferenceNumber, MerchantName, Client, Customer, AccountNumber, AccountName, OtherDetails, Amount, ServiceFee, PPRemarks, StatusName FROM dbo.PaymentsStatusMerchant</CommandText>
+                    <CommandText>SELECT Date, ReferenceNumber, MerchantName, Client, Customer, AccountNumber, AccountName, OtherDetails, Amount, ServiceFee, PPRemarks, StatusName, UserId, Attachment, ProcessedBy FROM dbo.PaymentsStatusMerchant</CommandText>
                     <Parameters />
                   </DbCommand>
                 </SelectCommand>
@@ -31,6 +31,9 @@
               <Mapping SourceColumn="ServiceFee" DataSetColumn="ServiceFee" />
               <Mapping SourceColumn="PPRemarks" DataSetColumn="PPRemarks" />
               <Mapping SourceColumn="StatusName" DataSetColumn="StatusName" />
+              <Mapping SourceColumn="UserId" DataSetColumn="UserId" />
+              <Mapping SourceColumn="Attachment" DataSetColumn="Attachment" />
+              <Mapping SourceColumn="ProcessedBy" DataSetColumn="ProcessedBy" />
             </Mappings>
             <Sources />
           </TableAdapter>
@@ -105,6 +108,27 @@
                 </xs:simpleType>
               </xs:element>
               <xs:element name="StatusName" msprop:Generator_ColumnVarNameInTable="columnStatusName" msprop:Generator_ColumnPropNameInRow="StatusName" msprop:Generator_ColumnPropNameInTable="StatusNameColumn" msprop:Generator_UserColumnName="StatusName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="UserId" msprop:Generator_ColumnVarNameInTable="columnUserId" msprop:Generator_ColumnPropNameInRow="UserId" msprop:Generator_ColumnPropNameInTable="UserIdColumn" msprop:Generator_UserColumnName="UserId" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="450" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Attachment" msprop:Generator_ColumnVarNameInTable="columnAttachment" msprop:Generator_ColumnPropNameInRow="Attachment" msprop:Generator_ColumnPropNameInTable="AttachmentColumn" msprop:Generator_UserColumnName="Attachment" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ProcessedBy" msprop:Generator_ColumnVarNameInTable="columnProcessedBy" msprop:Generator_ColumnPropNameInRow="ProcessedBy" msprop:Generator_ColumnPropNameInTable="ProcessedByColumn" msprop:Generator_UserColumnName="ProcessedBy" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="2147483647" />

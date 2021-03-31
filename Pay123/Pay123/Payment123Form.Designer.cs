@@ -52,6 +52,7 @@ namespace Pay123
             this.paymentDataGridView.Size = new System.Drawing.Size(875, 362);
             this.paymentDataGridView.TabIndex = 0;
             this.paymentDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.paymentDataGridView_CellClick);
+            this.paymentDataGridView.CellStyleChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.paymentDataGridView_CellStyleChanged);
             // 
             // btnShowDetails
             // 

@@ -303,6 +303,12 @@ namespace Pay123 {
             
             private global::System.Data.DataColumn columnStatusName;
             
+            private global::System.Data.DataColumn columnUserId;
+            
+            private global::System.Data.DataColumn columnAttachment;
+            
+            private global::System.Data.DataColumn columnProcessedBy;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public PaymentsStatusMerchantDataTable() {
@@ -434,6 +440,30 @@ namespace Pay123 {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn UserIdColumn {
+                get {
+                    return this.columnUserId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn AttachmentColumn {
+                get {
+                    return this.columnAttachment;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn ProcessedByColumn {
+                get {
+                    return this.columnProcessedBy;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -469,7 +499,7 @@ namespace Pay123 {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public PaymentsStatusMerchantRow AddPaymentsStatusMerchantRow(System.DateTime Date, string ReferenceNumber, string MerchantName, string Client, string Customer, string AccountNumber, string AccountName, string OtherDetails, decimal Amount, decimal ServiceFee, string PPRemarks, string StatusName) {
+            public PaymentsStatusMerchantRow AddPaymentsStatusMerchantRow(System.DateTime Date, string ReferenceNumber, string MerchantName, string Client, string Customer, string AccountNumber, string AccountName, string OtherDetails, decimal Amount, decimal ServiceFee, string PPRemarks, string StatusName, string UserId, string Attachment, string ProcessedBy) {
                 PaymentsStatusMerchantRow rowPaymentsStatusMerchantRow = ((PaymentsStatusMerchantRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Date,
@@ -483,7 +513,10 @@ namespace Pay123 {
                         Amount,
                         ServiceFee,
                         PPRemarks,
-                        StatusName};
+                        StatusName,
+                        UserId,
+                        Attachment,
+                        ProcessedBy};
                 rowPaymentsStatusMerchantRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowPaymentsStatusMerchantRow);
                 return rowPaymentsStatusMerchantRow;
@@ -525,6 +558,9 @@ namespace Pay123 {
                 this.columnServiceFee = base.Columns["ServiceFee"];
                 this.columnPPRemarks = base.Columns["PPRemarks"];
                 this.columnStatusName = base.Columns["StatusName"];
+                this.columnUserId = base.Columns["UserId"];
+                this.columnAttachment = base.Columns["Attachment"];
+                this.columnProcessedBy = base.Columns["ProcessedBy"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -554,6 +590,12 @@ namespace Pay123 {
                 base.Columns.Add(this.columnPPRemarks);
                 this.columnStatusName = new global::System.Data.DataColumn("StatusName", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnStatusName);
+                this.columnUserId = new global::System.Data.DataColumn("UserId", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnUserId);
+                this.columnAttachment = new global::System.Data.DataColumn("Attachment", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAttachment);
+                this.columnProcessedBy = new global::System.Data.DataColumn("ProcessedBy", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnProcessedBy);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnReferenceNumber}, true));
                 this.columnDate.AllowDBNull = false;
@@ -571,6 +613,9 @@ namespace Pay123 {
                 this.columnAmount.AllowDBNull = false;
                 this.columnPPRemarks.MaxLength = 2147483647;
                 this.columnStatusName.MaxLength = 2147483647;
+                this.columnUserId.MaxLength = 450;
+                this.columnAttachment.MaxLength = 2147483647;
+                this.columnProcessedBy.MaxLength = 2147483647;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -880,6 +925,54 @@ namespace Pay123 {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string UserId {
+                get {
+                    try {
+                        return ((string)(this[this.tablePaymentsStatusMerchant.UserIdColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'UserId\' in table \'PaymentsStatusMerchant\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePaymentsStatusMerchant.UserIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Attachment {
+                get {
+                    try {
+                        return ((string)(this[this.tablePaymentsStatusMerchant.AttachmentColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Attachment\' in table \'PaymentsStatusMerchant\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePaymentsStatusMerchant.AttachmentColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string ProcessedBy {
+                get {
+                    try {
+                        return ((string)(this[this.tablePaymentsStatusMerchant.ProcessedByColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ProcessedBy\' in table \'PaymentsStatusMerchant\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePaymentsStatusMerchant.ProcessedByColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsMerchantNameNull() {
                 return this.IsNull(this.tablePaymentsStatusMerchant.MerchantNameColumn);
             }
@@ -960,6 +1053,42 @@ namespace Pay123 {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetStatusNameNull() {
                 this[this.tablePaymentsStatusMerchant.StatusNameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsUserIdNull() {
+                return this.IsNull(this.tablePaymentsStatusMerchant.UserIdColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetUserIdNull() {
+                this[this.tablePaymentsStatusMerchant.UserIdColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsAttachmentNull() {
+                return this.IsNull(this.tablePaymentsStatusMerchant.AttachmentColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetAttachmentNull() {
+                this[this.tablePaymentsStatusMerchant.AttachmentColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsProcessedByNull() {
+                return this.IsNull(this.tablePaymentsStatusMerchant.ProcessedByColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetProcessedByNull() {
+                this[this.tablePaymentsStatusMerchant.ProcessedByColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -1134,6 +1263,9 @@ namespace Pay123.Payment123DataSetTableAdapters {
             tableMapping.ColumnMappings.Add("ServiceFee", "ServiceFee");
             tableMapping.ColumnMappings.Add("PPRemarks", "PPRemarks");
             tableMapping.ColumnMappings.Add("StatusName", "StatusName");
+            tableMapping.ColumnMappings.Add("UserId", "UserId");
+            tableMapping.ColumnMappings.Add("Attachment", "Attachment");
+            tableMapping.ColumnMappings.Add("ProcessedBy", "ProcessedBy");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -1151,8 +1283,8 @@ namespace Pay123.Payment123DataSetTableAdapters {
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT Date, ReferenceNumber, MerchantName, Client, Customer, AccountNumber, Acco" +
-                "untName, OtherDetails, Amount, ServiceFee, PPRemarks, StatusName FROM dbo.Paymen" +
-                "tsStatusMerchant";
+                "untName, OtherDetails, Amount, ServiceFee, PPRemarks, StatusName, UserId, Attach" +
+                "ment, ProcessedBy FROM dbo.PaymentsStatusMerchant";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         

@@ -170,6 +170,7 @@ namespace Pay123
             this.Name = "Payment123MDI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Payment123MDI";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Payment123MDI_FormClosing);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

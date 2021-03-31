@@ -111,7 +111,7 @@ namespace Pay123
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            this.Close();
         }
 
         private void horizontalToolStripMenuItem_Click(object sender, EventArgs e)
@@ -132,6 +132,22 @@ namespace Pay123
         private void arrangeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.LayoutMdi(MdiLayout.ArrangeIcons);
+        }
+
+        private void Payment123MDI_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            DialogResult objDialogResult = MessageBox.Show("Are you sure you want to exit this application", "Form Closing", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (objDialogResult == DialogResult.No)
+            {
+                e.Cancel = true;
+            }
+            else
+            {
+                e.Cancel = false;
+                LogInForm objLogIn = new LogInForm();
+                objLogIn.Visible = true;
+            }
         }
     }
 }

@@ -91,6 +91,8 @@ namespace Pay123
             });
         }
 
+      
+
         private async void Payment123_Load(object sender, EventArgs e)
         {
             paymentLists = await LoadDataAsync();
@@ -100,6 +102,15 @@ namespace Pay123
             paymentDataGridView.DataSource = paymentLists.ToList();
             paymentDataGridView.Columns["UserId"].Visible = false;
             lblPagePayment.Text = string.Format("Page {0}/{1}", pageNumber, paymentLists.PageCount);
+
+            paymentDataGridView.Columns["ReferenceNumber"].HeaderText = "Reference #";
+            paymentDataGridView.Columns["MerchantName"].HeaderText = "Merchant";
+            paymentDataGridView.Columns["AccountNumber"].HeaderText = "Account Number";
+            paymentDataGridView.Columns["AccountName"].HeaderText = "Account Name";
+            paymentDataGridView.Columns["OtherDetails"].HeaderText = "Other Details";
+            paymentDataGridView.Columns["ServiceFee"].HeaderText = "Service Fee";
+            paymentDataGridView.Columns["PPRemarks"].HeaderText = "Remarks";
+            paymentDataGridView.Columns["StatusName"].HeaderText = "Status";
 
         }
 
@@ -128,6 +139,28 @@ namespace Pay123
                 paymentDataGridView.DataSource = paymentLists.ToList();
                 paymentDataGridView.Columns["UserId"].Visible = false;
                 lblPagePayment.Text = string.Format("Page {0}/{1}", pageNumber, paymentLists.PageCount);
+            }
+        }
+
+        private void paymentDataGridView_CellStyleChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            switch(Convert.ToString(paymentDataGridView.Rows[e.RowIndex].Cells[11].FormattedValue))
+            {
+                case "Pending":
+                    paymentDataGridView.Rows[e.RowIndex].Cells[11].Style.BackColor = Color.White;
+                    break;
+                case "Processing":
+                    paymentDataGridView.Rows[e.RowIndex].Cells[11].Style.BackColor = Color.Gold;
+                    break;
+                case "Done":
+                    paymentDataGridView.Rows[e.RowIndex].Cells[11].Style.BackColor = Color.Green;
+                    break;
+                case "Failed":
+                    paymentDataGridView.Rows[e.RowIndex].Cells[11].Style.BackColor = Color.Red;
+                    break;
+                default:
+                    paymentDataGridView.Rows[e.RowIndex].Cells[11].Style.BackColor = Color.White;
+                    break;
             }
         }
     }

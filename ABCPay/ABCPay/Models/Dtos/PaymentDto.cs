@@ -65,5 +65,8 @@ namespace ABCPay.Models
         public string UserId { get; set; }
 
         public string Attachment { get; set; }
+
+        [Display(Name = "Processed By")]
+        public string ProcessedBy { get; set; }
     }
 }

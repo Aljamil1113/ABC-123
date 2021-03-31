@@ -52,27 +52,59 @@
         <tbody>
             @foreach (var item in Model.PaymentSs)
             {
-                <tr>
-                    <td>@Html.DisplayFor(p => item.Date)</td>
-                    <td><a class="btn btn-link" asp-action="Edit" asp-route-id="@item.ReferenceNumber">@Html.DisplayFor(p => item.ReferenceNumber)</a></td>
-                    <td>@Html.DisplayFor(p => item.MerchantName)</td>
-                    <td>@Html.DisplayFor(p => item.AccountNumber)</td>
-                    <td>@Html.DisplayFor(p => item.AccountName)</td>
-                    <td>@Html.DisplayFor(p => item.OtherDetails)</td>
-                    <td>@Html.DisplayFor(p => item.Amount)</td>
-                    <td>@Html.DisplayFor(p => item.StatusName)</td>
-                    <td>@Html.DisplayFor(p => item.ServiceFee)</td>
-                    <td>@Html.DisplayFor(p => item.PPRemarks)</td>
-                    <td><a href="@item.Attachment">@Html.DisplayFor(p => item.Attachment)</a></td>
-                    <td>
+            <tr>
+                <td>@Html.DisplayFor(p => item.Date)</td>
+                <td><a class="btn btn-link" asp-action="Edit" asp-route-id="@item.ReferenceNumber">@Html.DisplayFor(p => item.ReferenceNumber)</a></td>
+                <td>@Html.DisplayFor(p => item.MerchantName)</td>
+                <td>@Html.DisplayFor(p => item.AccountNumber)</td>
+                <td>@Html.DisplayFor(p => item.AccountName)</td>
+                <td>@Html.DisplayFor(p => item.OtherDetails)</td>
+                <td>@Html.DisplayFor(p => item.Amount)</td>
+
+                @switch (item.StatusName)
+                {
+                    case "Pending":
+                        <td>@Html.DisplayFor(p => item.StatusName)</td>
+                        break;
+                    case "Processing":
+                        <td class="btn-outline-warning">@Html.DisplayFor(p => item.StatusName)</td>
+                        break;
+                    case "Done":
+                        <td class="btn-outline-success">@Html.DisplayFor(p => item.StatusName)</td>
+                        break;
+                    case "Failed":
+                        <td class="btn-outline-danger">@Html.DisplayFor(p => item.StatusName)</td>
+                        break;
+                    default:
+                        <td>@Html.DisplayFor(p => item.StatusName)</td>
+                        break;
+                }
+
+
+
+                <td>@Html.DisplayFor(p => item.ServiceFee)</td>
+                <td>@Html.DisplayFor(p => item.PPRemarks)</td>
+                <td><a href="@item.Attachment">@Html.DisplayFor(p => item.Attachment)</a></td>
+                <td>
+                    @if (item.StatusName == "Processing")
+                    {
+                        <button disabled class="btn btn-danger"
+                                onclick="return confirm('Are you sure you want to delete this payment with ref #: @item.ReferenceNumber')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    }
+                    else
+                    {
                         <form method="post" asp-action="DeletePayment" asp-route-id="@item.ReferenceNumber">
                             <button type="submit" class="btn btn-danger"
                                     onclick="return confirm('Are you sure you want to delete this payment with ref #: @item.ReferenceNumber')">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
-                    </td>
-                </tr>
+                    }
+
+                </td>
+            </tr>
             }
         </tbody>
     </table>
@@ -85,6 +117,6 @@
 
 
 @section Scripts
-{
+                {
     <script src="~/js/site.js"></script>
-}
+                    }
