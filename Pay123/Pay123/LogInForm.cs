@@ -1,5 +1,6 @@
 ﻿using Pay123.Data;
 using Pay123.Models;
+using Pay123.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,7 +16,6 @@ namespace Pay123
     public partial class LogInForm : Form
     {
         private User objUser;
-        private Pay123Db pay123Db;
         public LogInForm()
         {
             InitializeComponent();
@@ -37,6 +37,13 @@ namespace Pay123
             using (var db = new Pay123Db())
             {
                 isTrue = db.Users.Any(u => u.UserName == objUser.UserName && u.Password == objUser.Password);
+               
+                if (isTrue)
+                {
+                    var user = db.Users.Where(u => u.UserName == objUser.UserName && u.Password == objUser.Password).SingleOrDefault();
+                    GlobalUser.Username = user.UserName;
+                }
+                
             }
 
             if(isTrue)

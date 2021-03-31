@@ -19,15 +19,16 @@ namespace Pay123
     public partial class Payment123 : Form
     {
         private readonly Pay123Db db;
-        private Payment paymentSend;
-        private IPagedList<Payment> paymentLists;
+        private PaymentsStatusMerchant paymentSend;
+        private IPagedList<PaymentsStatusMerchant> paymentLists;
         private int pageNumber = 1;
         private int pageSize = 10;
         public Payment123()
         {
             InitializeComponent();
             db = new Pay123Db();
-            paymentSend = new Payment();
+            paymentSend = new PaymentsStatusMerchant();
+            lblUsernameValue.Text = GlobalUser.Username;
         }
         
 
@@ -35,9 +36,9 @@ namespace Pay123
         {
             paymentSend.Date = Convert.ToDateTime(paymentDataGridView.Rows[e.RowIndex].Cells[0].FormattedValue);
             paymentSend.ReferenceNumber = paymentDataGridView.Rows[e.RowIndex].Cells[1].FormattedValue.ToString();
-            paymentSend.Client = paymentDataGridView.Rows[e.RowIndex].Cells[2].FormattedValue.ToString();
-            paymentSend.Customer = paymentDataGridView.Rows[e.RowIndex].Cells[3].FormattedValue.ToString();
-            paymentSend.MerchantId = Convert.ToInt32(paymentDataGridView.Rows[e.RowIndex].Cells[4].FormattedValue);
+            paymentSend.MerchantName = paymentDataGridView.Rows[e.RowIndex].Cells[2].FormattedValue.ToString();
+            paymentSend.Client = paymentDataGridView.Rows[e.RowIndex].Cells[3].FormattedValue.ToString();
+            paymentSend.Customer = paymentDataGridView.Rows[e.RowIndex].Cells[4].FormattedValue.ToString();
             paymentSend.AccountNumber = paymentDataGridView.Rows[e.RowIndex].Cells[5].FormattedValue.ToString();
             paymentSend.AccountName = paymentDataGridView.Rows[e.RowIndex].Cells[6].FormattedValue.ToString();
             paymentSend.OtherDetails = paymentDataGridView.Rows[e.RowIndex].Cells[7].FormattedValue.ToString();
@@ -47,10 +48,10 @@ namespace Pay123
                 : Convert.ToDecimal(paymentDataGridView.Rows[e.RowIndex].Cells[9].FormattedValue.ToString());
 
             paymentSend.PPRemarks = paymentDataGridView.Rows[e.RowIndex].Cells[10].FormattedValue.ToString();
-            paymentSend.StatusId = Convert.ToInt32(paymentDataGridView.Rows[e.RowIndex].Cells[11].FormattedValue);
+            paymentSend.StatusName = paymentDataGridView.Rows[e.RowIndex].Cells[11].FormattedValue.ToString();
             paymentSend.UserId = paymentDataGridView.Rows[e.RowIndex].Cells[12].FormattedValue.ToString();
+            paymentSend.Attachment = paymentDataGridView.Rows[e.RowIndex].Cells[13].FormattedValue.ToString();
 
-           
         }
 
         private void btnShowDetails_Click(object sender, EventArgs e)
@@ -62,14 +63,12 @@ namespace Pay123
                 MessageBox.Show("Please select a record", "No Select Record", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 paymentSend.Date = DateTime.Now;
                 paymentSend.ServiceFee = 0.00M;
-                paymentSend.MerchantId = 1;
-                paymentSend.StatusId = 1;
             }
             else
             {
                 paymentForm.PreviewPayment(paymentSend.ReferenceNumber, paymentSend.Date, paymentSend.AccountNumber, paymentSend.AccountName,
                 paymentSend.OtherDetails, paymentSend.Amount, paymentSend.ServiceFee, paymentSend.PPRemarks, paymentSend.Client,
-                paymentSend.Customer, paymentSend.MerchantId, paymentSend.StatusId, paymentSend.UserId);
+                paymentSend.Customer, paymentSend.MerchantName, paymentSend.StatusName, paymentSend.UserId, paymentSend.Attachment);
 
                 paymentForm.ShowDialog();
             }
@@ -82,15 +81,9 @@ namespace Pay123
             Payment123_Load(sender, e);
         }
 
-        public async Task<IPagedList<Payment>> LoadDataAsync()
+        public async Task<IPagedList<PaymentsStatusMerchant>> LoadDataAsync()
         {
-            List<Payment> payments = (List<Payment>)await RestService.GetPayments();
-
-            //if (payments == null)
-            //{
-            //    MessageBox.Show("There are no data's", "No Connection", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //    this.Close();
-            //}
+            var payments = (List<PaymentsStatusMerchant>)await RestService.GetPayments();
 
             return await Task.Factory.StartNew(() =>
             {

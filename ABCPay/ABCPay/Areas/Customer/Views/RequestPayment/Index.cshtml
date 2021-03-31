@@ -2,6 +2,13 @@
 @{
     ViewData["Title"] = "Index";
 }
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    var user = await UserManager.GetUserAsync(User);
+}
+
 <div class="row">
     <div class="col-6">
         <h2 class="text-info">Request Payments</h2>
@@ -11,8 +18,8 @@
 <br />
 <div class="row">
     <div class="col-12 text-right">
-        <label>User: </label>  <br />
-        <label>Balance: </label>
+        <label>User: </label>  @user.FirstName, @user.LastName<br />
+        <label>Balance: </label> @user.Balance
     </div>
 </div>
 <br />
@@ -24,54 +31,56 @@
     </div>
 </div>
 <br />
-    <div>
-        <table class="table table-striped" id="paymentRecords">
-            <thead>
-                <tr class="table-info">
-                    <th>@Html.DisplayNameFor(p => p.Payments.FirstOrDefault().Date)</th>
-                    <th>@Html.DisplayNameFor(p => p.Payments.FirstOrDefault().ReferenceNumber)</th>
-                    <th>@Html.DisplayNameFor(p => p.Payments.FirstOrDefault().Merchant)</th>
-                    <th>@Html.DisplayNameFor(p => p.Payments.FirstOrDefault().AccountNumber)</th>
-                    <th>@Html.DisplayNameFor(p => p.Payments.FirstOrDefault().AccountName)</th>
-                    <th>@Html.DisplayNameFor(p => p.Payments.FirstOrDefault().OtherDetails)</th>
-                    <th>@Html.DisplayNameFor(p => p.Payments.FirstOrDefault().Amount)</th>
-                    <th>@Html.DisplayNameFor(p => p.Payments.FirstOrDefault().Status)</th>
-                    <th>@Html.DisplayNameFor(p => p.Payments.FirstOrDefault().ServiceFee)</th>
-                    <th>@Html.DisplayNameFor(p => p.Payments.FirstOrDefault().PPRemarks)</th>
-                    <th></th>
+<div>
+    <table class="table table-striped" id="paymentRecords">
+        <thead>
+            <tr class="table-info">
+                <th>@Html.DisplayNameFor(p => p.PaymentSs.FirstOrDefault().Date)</th>
+                <th>@Html.DisplayNameFor(p => p.PaymentSs.FirstOrDefault().ReferenceNumber)</th>
+                <th>@Html.DisplayNameFor(p => p.PaymentSs.FirstOrDefault().MerchantName)</th>
+                <th>@Html.DisplayNameFor(p => p.PaymentSs.FirstOrDefault().AccountNumber)</th>
+                <th>@Html.DisplayNameFor(p => p.PaymentSs.FirstOrDefault().AccountName)</th>
+                <th>@Html.DisplayNameFor(p => p.PaymentSs.FirstOrDefault().OtherDetails)</th>
+                <th>@Html.DisplayNameFor(p => p.PaymentSs.FirstOrDefault().Amount)</th>
+                <th>@Html.DisplayNameFor(p => p.PaymentSs.FirstOrDefault().StatusName)</th>
+                <th>@Html.DisplayNameFor(p => p.PaymentSs.FirstOrDefault().ServiceFee)</th>
+                <th>@Html.DisplayNameFor(p => p.PaymentSs.FirstOrDefault().PPRemarks)</th>
+                <th>Attachment</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.PaymentSs)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(p => item.Date)</td>
+                    <td><a class="btn btn-link" asp-action="Edit" asp-route-id="@item.ReferenceNumber">@Html.DisplayFor(p => item.ReferenceNumber)</a></td>
+                    <td>@Html.DisplayFor(p => item.MerchantName)</td>
+                    <td>@Html.DisplayFor(p => item.AccountNumber)</td>
+                    <td>@Html.DisplayFor(p => item.AccountName)</td>
+                    <td>@Html.DisplayFor(p => item.OtherDetails)</td>
+                    <td>@Html.DisplayFor(p => item.Amount)</td>
+                    <td>@Html.DisplayFor(p => item.StatusName)</td>
+                    <td>@Html.DisplayFor(p => item.ServiceFee)</td>
+                    <td>@Html.DisplayFor(p => item.PPRemarks)</td>
+                    <td><a href="@item.Attachment">@Html.DisplayFor(p => item.Attachment)</a></td>
+                    <td>
+                        <form method="post" asp-action="DeletePayment" asp-route-id="@item.ReferenceNumber">
+                            <button type="submit" class="btn btn-danger"
+                                    onclick="return confirm('Are you sure you want to delete this payment with ref #: @item.ReferenceNumber')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Payments)
-                {
-                    <tr>
-                        <td>@Html.DisplayFor(p => item.Date)</td>
-                        <td><a class="btn btn-link" asp-action="Edit" asp-route-id="@item.ReferenceNumber">@Html.DisplayFor(p => item.ReferenceNumber)</a></td>
-                        <td>@Html.DisplayFor(p => item.Merchant.Name)</td>
-                        <td>@Html.DisplayFor(p => item.AccountNumber)</td>
-                        <td>@Html.DisplayFor(p => item.AccountName)</td>
-                        <td>@Html.DisplayFor(p => item.OtherDetails)</td>
-                        <td>@Html.DisplayFor(p => item.Amount)</td>
-                        <td>@Html.DisplayFor(p => item.Status.Name)</td>
-                        <td>@Html.DisplayFor(p => item.ServiceFee)</td>
-                        <td>@Html.DisplayFor(p => item.PPRemarks)</td>
-                        <td>
-                            <form method="post" asp-action="DeletePayment" asp-route-id="@item.ReferenceNumber">
-                                <button type="submit" class="btn btn-danger"
-                                        onclick="return confirm('Are you sure you want to delete this payment with ref #: @item.ReferenceNumber')">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+            }
+        </tbody>
+    </table>
+</div>
 
-    <div page-model="@Model.PagingInfo" page-action="Index" page-class-enabled="true"
-         page-class="btn border" page-class-normal="btn btn-default active"
-         page-class-selected="btn btn-primary active" class="btn-group m-1"></div>
+<div page-model="@Model.PagingInfo" page-action="Index" page-class-enabled="true"
+     page-class="btn border" page-class-normal="btn btn-default active"
+     page-class-selected="btn btn-primary active" class="btn-group m-1"></div>
 
 
 

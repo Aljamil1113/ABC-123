@@ -1,5 +1,6 @@
 ﻿using ABCPay.Data;
 using ABCPay.Models;
+using ABCPay.Models.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,14 +16,14 @@ namespace ABCPay.Services
         {
             db = _db;
         }
-        public ICollection<Payment> GetPaymentSends()
+        public ICollection<PaymentMS> GetPaymentSends()
         {
-            return db.Payments.OrderBy(p => p.Date).ToList();
+            return db.PaymentMSs.OrderBy(p => p.Date).ToList();
         }
 
-        public Payment GetPaymentSend(string id)
+        public PaymentMS GetPaymentSend(string id)
         {
-            return db.Payments.Where(p => p.ReferenceNumber == id).FirstOrDefault();
+            return db.PaymentMSs.Where(p => p.ReferenceNumber == id).FirstOrDefault();
         }
 
         public bool IsPaymentSendExist(string id)
@@ -42,21 +43,6 @@ namespace ABCPay.Services
             db.Update(paymentSend);
 
             return SavePaymentSend();
-        }
-
-
-        //public bool IsPaymentExist(string id)
-        //{
-        //    return db.Payments.Any(p => p.ReferenceNumber == id);
-        //}
-
-        //public bool UpdatePayment(Payment payment)
-        //{
-        //    db.Update(payment);
-
-        //    return SavePaymentSend();
-        //}
-
-       
+        }       
     }
 }

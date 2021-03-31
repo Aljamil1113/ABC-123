@@ -55,6 +55,9 @@ namespace ABCPay.Data.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("Attachment")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Client")
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);

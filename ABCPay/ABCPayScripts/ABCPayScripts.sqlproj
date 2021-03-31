@@ -62,6 +62,7 @@
     <Folder Include="dbo\Tables\" />
     <Folder Include="Publish" />
     <Folder Include="Compare" />
+    <Folder Include="dbo\Views" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\__EFMigrationsHistory.sql" />
@@ -75,6 +76,7 @@
     <Build Include="dbo\Tables\Merchants.sql" />
     <Build Include="dbo\Tables\Statuses.sql" />
     <Build Include="dbo\Tables\Payments.sql" />
+    <Build Include="dbo\Views\PaymentMS.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Publish\ABCPayScripts.publish.xml" />

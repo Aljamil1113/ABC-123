@@ -9,5 +9,17 @@
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
-INSERT INTO Users(UserName, Password) VALUES('root', 'root123*');
-INSERT INTO Users(UserName, Password) VALUES('admin', 'Admin123*');
+
+
+IF NOT EXISTS(Select * from Users where UserName = 'root' AND Password = 'root123*')
+BEGIN
+   INSERT INTO Users(UserName, Password) VALUES('root', 'root123*');
+END
+GO
+
+IF NOT EXISTS(Select * from Users where UserName = 'admin' AND Password = 'Admin123*')
+BEGIN
+   INSERT INTO Users(UserName, Password) VALUES('admin', 'Admin123*');
+END
+GO
+

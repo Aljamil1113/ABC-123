@@ -28,7 +28,7 @@ namespace ABCPay.Models
 
 
         [Display(Name = "Merchant")]
-        public int MerchantId { get; set; }
+        public string MerchantName { get; set; }
 
 
         [Display(Name = "Account Number")]
@@ -56,12 +56,14 @@ namespace ABCPay.Models
 
 
         [Display(Name = "Status")]
-        public int StatusId { get; set; }
+        public string StatusName { get; set; }
 
 
         [Display(Name = "Payment Remarks")]
         public string PPRemarks { get; set; }    
 
         public string UserId { get; set; }
+
+        public string Attachment { get; set; }
     }
 }

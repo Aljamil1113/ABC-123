@@ -1,6 +1,7 @@
 ﻿using ABCPay.Data;
 using ABCPay.Models;
 using ABCPay.Models.ViewModels;
+using ABCPay.Models.Views;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -42,24 +43,23 @@ namespace ABCPay.Areas.Customer.Controllers
 
             RequestPaymentViewModel RequestPaymentVM = new RequestPaymentViewModel()
             {
-                Payments = new List<Payment>()
+                PaymentSs = new List<PaymentMS>()
             };
 
             StringBuilder param = new StringBuilder();
 
             param.Append("/Customer/RequestPayment?productPage=:");
 
-            RequestPaymentVM.Payments = db.Payments.Where(p => p.UserId == claim.Value).Include(m => m.Merchant)
-                .Include(s => s.Status).ToList();
+            RequestPaymentVM.PaymentSs = db.PaymentMSs.Where(p => p.UserId == claim.Value).ToList();
 
-            if (RequestPaymentVM.Payments == null)
+            if (RequestPaymentVM.PaymentSs == null)
             {
                 return View();
             }
 
-            var count = RequestPaymentVM.Payments.Count;
+            var count = RequestPaymentVM.PaymentSs.Count;
 
-            RequestPaymentVM.Payments = RequestPaymentVM.Payments.OrderBy(p => p.Date)
+            RequestPaymentVM.PaymentSs = RequestPaymentVM.PaymentSs.OrderBy(p => p.Date)
                 .Skip((productPage - 1) * PageSize).Take(PageSize).ToList();
 
             RequestPaymentVM.PagingInfo = new PagingInfo

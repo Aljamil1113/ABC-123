@@ -71,5 +71,7 @@ namespace ABCPay.Models
 
         [ForeignKey("UserId")]
         public virtual ApplicationUser ApplicationUser { get; set; }
+
+        public string Attachment { get; set; }
     }
 }

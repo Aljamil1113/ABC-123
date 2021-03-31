@@ -15,13 +15,6 @@ namespace Pay123.Models
         [StringLength(8)]
         public string ReferenceNumber { get; set; }
 
-        [StringLength(50)]
-        public string Client { get; set; }
-
-        [StringLength(50)]
-        public string Customer { get; set; }
-        public int MerchantId { get; set; }
-
         [Required]
         public string AccountNumber { get; set; }
 
@@ -37,9 +30,21 @@ namespace Pay123.Models
 
         public string PPRemarks { get; set; }
 
+        public int MerchantId { get; set; }
+
         public int StatusId { get; set; }
 
         [StringLength(450)]
         public string UserId { get; set; }
+
+        [StringLength(50)]
+        public string Client { get; set; }
+
+        [StringLength(50)]
+        public string Customer { get; set; }
+
+        public string Attachment { get; set; }
+
+        public string ProcessedBy { get; set; }
     }
 }

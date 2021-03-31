@@ -36,6 +36,8 @@ namespace Pay123
             this.btnPreviousPayment = new System.Windows.Forms.Button();
             this.lblPagePayment = new System.Windows.Forms.Label();
             this.btnNextPayment = new System.Windows.Forms.Button();
+            this.lblUsername = new System.Windows.Forms.Label();
+            this.lblUsernameValue = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.paymentDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -43,11 +45,11 @@ namespace Pay123
             // 
             this.paymentDataGridView.BackgroundColor = System.Drawing.Color.Gold;
             this.paymentDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.paymentDataGridView.Location = new System.Drawing.Point(12, 48);
+            this.paymentDataGridView.Location = new System.Drawing.Point(12, 76);
             this.paymentDataGridView.Name = "paymentDataGridView";
             this.paymentDataGridView.RowHeadersWidth = 51;
             this.paymentDataGridView.RowTemplate.Height = 24;
-            this.paymentDataGridView.Size = new System.Drawing.Size(875, 390);
+            this.paymentDataGridView.Size = new System.Drawing.Size(875, 362);
             this.paymentDataGridView.TabIndex = 0;
             this.paymentDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.paymentDataGridView_CellClick);
             // 
@@ -78,7 +80,7 @@ namespace Pay123
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(8, 21);
+            this.label1.Location = new System.Drawing.Point(12, 49);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(417, 24);
             this.label1.TabIndex = 3;
@@ -113,6 +115,25 @@ namespace Pay123
             this.btnNextPayment.UseVisualStyleBackColor = true;
             this.btnNextPayment.Click += new System.EventHandler(this.btnNextPayment_Click);
             // 
+            // lblUsername
+            // 
+            this.lblUsername.AutoSize = true;
+            this.lblUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUsername.Location = new System.Drawing.Point(643, 23);
+            this.lblUsername.Name = "lblUsername";
+            this.lblUsername.Size = new System.Drawing.Size(75, 29);
+            this.lblUsername.TabIndex = 7;
+            this.lblUsername.Text = "User:";
+            // 
+            // lblUsernameValue
+            // 
+            this.lblUsernameValue.AutoSize = true;
+            this.lblUsernameValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUsernameValue.Location = new System.Drawing.Point(724, 23);
+            this.lblUsernameValue.Name = "lblUsernameValue";
+            this.lblUsernameValue.Size = new System.Drawing.Size(0, 29);
+            this.lblUsernameValue.TabIndex = 8;
+            // 
             // Payment123
             // 
             this.AllowDrop = true;
@@ -120,6 +141,8 @@ namespace Pay123
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Tomato;
             this.ClientSize = new System.Drawing.Size(902, 551);
+            this.Controls.Add(this.lblUsernameValue);
+            this.Controls.Add(this.lblUsername);
             this.Controls.Add(this.btnNextPayment);
             this.Controls.Add(this.lblPagePayment);
             this.Controls.Add(this.btnPreviousPayment);
@@ -146,6 +169,8 @@ namespace Pay123
         private System.Windows.Forms.Button btnPreviousPayment;
         private System.Windows.Forms.Label lblPagePayment;
         private System.Windows.Forms.Button btnNextPayment;
+        private System.Windows.Forms.Label lblUsername;
+        private System.Windows.Forms.Label lblUsernameValue;
     }
 }
 

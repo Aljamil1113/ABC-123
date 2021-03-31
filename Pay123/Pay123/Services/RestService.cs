@@ -13,9 +13,9 @@ namespace Pay123.Services
     public static class RestService
     {
         private static readonly string baseURL = "https://localhost:44324/api/";
-        public static async Task<IEnumerable<Payment>> GetPayments()
+        public static async Task<IEnumerable<PaymentsStatusMerchant>> GetPayments()
         {
-            IEnumerable<Payment> payments = new List<Payment>();
+            var payments = new List<PaymentsStatusMerchant>();
 
             using (var client = new HttpClient())
             {
@@ -23,13 +23,11 @@ namespace Pay123.Services
 
                 var response = client.GetAsync("paymentsend").Result;
 
-                //var result = await response.Result;
-
                 if(response.IsSuccessStatusCode)
                 {
                     var readPayments = await response.Content.ReadAsStringAsync();
                  
-                    var responseAsPayments = JsonConvert.DeserializeObject<List<Payment>>(readPayments);
+                    var responseAsPayments = JsonConvert.DeserializeObject<List<PaymentsStatusMerchant>>(readPayments);
 
                     payments = responseAsPayments;
                 }

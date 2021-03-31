@@ -1,6 +1,8 @@
-﻿using ABCPay.Models;
+﻿using ABCPay.Data;
+using ABCPay.Models;
 using ABCPay.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,10 +16,14 @@ namespace ABCPay.Controllers.Api
     public class PaymentSendController : ControllerBase
     {
         private IPaymentServices paymentServices { get; set; }
+        UserManager<ApplicationUser> userManager;
+        private readonly ApplicationDbContext db;
 
-        public PaymentSendController(IPaymentServices _paymentServices)
+        public PaymentSendController(IPaymentServices _paymentServices, ApplicationDbContext _db, UserManager<ApplicationUser> _userManager)
         {
             paymentServices = _paymentServices;
+            userManager = _userManager;
+            db = _db;
         }
 
         [HttpGet]
@@ -43,9 +49,10 @@ namespace ABCPay.Controllers.Api
                     PPRemarks = item.PPRemarks,
                     Client = item.Client,
                     Customer = item.Customer,
-                    MerchantId = item.MerchantId,
-                    StatusId = item.StatusId,
-                    UserId = item.UserId
+                    MerchantName = item.MerchantName,
+                    StatusName = item.StatusName,
+                    UserId = item.UserId,
+                    Attachment = item.Attachment
                 });
             }
 
@@ -83,9 +90,10 @@ namespace ABCPay.Controllers.Api
                 PPRemarks = paymentSend.PPRemarks,
                 Client = paymentSend.Client,
                 Customer = paymentSend.Customer,
-                MerchantId = paymentSend.MerchantId,
-                StatusId = paymentSend.StatusId,
-                UserId = paymentSend.UserId
+                MerchantName = paymentSend.MerchantName,
+                StatusName = paymentSend.StatusName,
+                UserId = paymentSend.UserId,
+                Attachment = paymentSend.Attachment
             };
 
             return Ok(paymentDto);
@@ -111,7 +119,21 @@ namespace ABCPay.Controllers.Api
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            if(!paymentServices.UpdatePaymentSend(paymentSend))
+            var user = userManager.FindByIdAsync(paymentSend.UserId).Result;
+
+            if(user.Balance == 0.00M || user.Balance < 0.00M)
+            {
+                return BadRequest("Not enough Balance");
+            }
+
+            if (paymentSend.StatusId == 3)
+            {
+                user.Balance = user.Balance - Convert.ToDecimal(paymentSend.Amount + paymentSend.ServiceFee);
+                userManager.UpdateAsync(user);
+            }
+
+
+            if (!paymentServices.UpdatePaymentSend(paymentSend))
             {
                 ModelState.AddModelError("", $"Something went wrong updating {paymentSend.AccountNumber} - {paymentSend.AccountName}...");
                 return StatusCode(500, ModelState);

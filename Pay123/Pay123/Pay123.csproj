@@ -38,6 +38,24 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Google.Apis, Version=1.51.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.51.0\lib\net45\Google.Apis.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth, Version=1.51.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.51.0\lib\net45\Google.Apis.Auth.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth.PlatformServices, Version=1.51.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.51.0\lib\net45\Google.Apis.Auth.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Core, Version=1.51.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Core.1.51.0\lib\net45\Google.Apis.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Drive.v3, Version=1.51.0.2265, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Drive.v3.1.51.0.2265\lib\net45\Google.Apis.Drive.v3.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.PlatformServices, Version=1.51.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.51.0\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.ReportViewer.Common, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.140.1000.523\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
     </Reference>
@@ -84,6 +102,8 @@
     <Compile Include="LogInForm.Designer.cs">
       <DependentUpon>LogInForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Payment.cs" />
+    <Compile Include="Models\PaymentsStatusMerchant.cs" />
     <Compile Include="Payment123DataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -97,7 +117,6 @@
     </Compile>
     <Compile Include="Models\Merchant.cs" />
     <Compile Include="Data\Pay123Db.cs" />
-    <Compile Include="Models\Payment.cs" />
     <Compile Include="Payment123Form.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,11 +129,11 @@
     <Compile Include="Payment123MDI.Designer.cs">
       <DependentUpon>Payment123MDI.cs</DependentUpon>
     </Compile>
-    <Compile Include="PaymentFormcs.cs">
+    <Compile Include="PaymentForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PaymentFormcs.Designer.cs">
-      <DependentUpon>PaymentFormcs.cs</DependentUpon>
+    <Compile Include="PaymentForm.Designer.cs">
+      <DependentUpon>PaymentForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -126,6 +145,7 @@
     <Compile Include="RegisterUser.Designer.cs">
       <DependentUpon>RegisterUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Services\GlobalUser.cs" />
     <Compile Include="Services\IRestService.cs" />
     <Compile Include="Services\RestService.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
@@ -147,8 +167,8 @@
     <EmbeddedResource Include="Payment123MDI.resx">
       <DependentUpon>Payment123MDI.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PaymentFormcs.resx">
-      <DependentUpon>PaymentFormcs.cs</DependentUpon>
+    <EmbeddedResource Include="PaymentForm.resx">
+      <DependentUpon>PaymentForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PaymentPosts.rdlc" />
     <EmbeddedResource Include="Properties\Resources.resx">
