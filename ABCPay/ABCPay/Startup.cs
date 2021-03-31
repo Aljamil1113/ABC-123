@@ -40,11 +40,14 @@ namespace ABCPay
             services.AddControllersWithViews();
             services.AddRazorPages();
 
+
+            services.AddScoped<IDbInitializer, DbInitializer>();
+
             services.AddScoped<IPaymentServices, PaymentServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDbInitializer dbInitializer)
         {
             if (env.IsDevelopment())
             {
@@ -62,6 +65,7 @@ namespace ABCPay
 
             app.UseRouting();
 
+            dbInitializer.Initializer();
             app.UseAuthentication();
             app.UseAuthorization();
 
