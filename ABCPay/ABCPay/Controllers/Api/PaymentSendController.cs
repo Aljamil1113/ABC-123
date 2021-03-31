@@ -105,7 +105,7 @@ namespace ABCPay.Controllers.Api
         [ProducesResponseType(422)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        public IActionResult UpdatePaymentSend(string id, [FromBody]Payment paymentSend)
+        public async Task<IActionResult> UpdatePaymentSend(string id, [FromBody]Payment paymentSend)
         {
             if (paymentSend == null)
                 return BadRequest(ModelState);
@@ -129,7 +129,7 @@ namespace ABCPay.Controllers.Api
             if (paymentSend.StatusId == 3)
             {
                 user.Balance = user.Balance - Convert.ToDecimal(paymentSend.Amount + paymentSend.ServiceFee);
-                userManager.UpdateAsync(user);
+                await userManager.UpdateAsync(user);
             }
 
 
