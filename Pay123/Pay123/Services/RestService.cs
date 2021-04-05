@@ -3,6 +3,7 @@ using Pay123.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,22 +18,33 @@ namespace Pay123.Services
         {
             var payments = new List<PaymentsStatusMerchant>();
 
-            using (var client = new HttpClient())
+            try
             {
-                client.BaseAddress = new Uri(baseURL);
-
-                var response = client.GetAsync("paymentsend").Result;
-
-                if(response.IsSuccessStatusCode)
+                using (var client = new HttpClient())
                 {
-                    var readPayments = await response.Content.ReadAsStringAsync();
-                 
-                    var responseAsPayments = JsonConvert.DeserializeObject<List<PaymentsStatusMerchant>>(readPayments);
+                    client.BaseAddress = new Uri(baseURL);
 
-                    payments = responseAsPayments;
+                    var response = client.GetAsync("paymentsend").Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var readPayments = await response.Content.ReadAsStringAsync();
+
+                        var responseAsPayments = JsonConvert.DeserializeObject<List<PaymentsStatusMerchant>>(readPayments);
+
+                        payments = responseAsPayments;
+                    }
+
                 }
+
+            }
+            catch (WebException err)
+            {
+
+                MessageBox.Show(err.ToString(), "Error API", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
+          
             return payments;
         }
 

@@ -121,17 +121,18 @@ namespace ABCPay.Controllers.Api
 
             var user = userManager.FindByIdAsync(paymentSend.UserId).Result;
 
-            if(user.Balance == 0.00M || user.Balance < 0.00M)
+            if(user.Balance <= 0.00M || user.Balance < (paymentSend.Amount + paymentSend.ServiceFee))
             {
                 return BadRequest("Not enough Balance");
             }
-
-            if (paymentSend.StatusId == 3)
+            else
             {
-                user.Balance = user.Balance - Convert.ToDecimal(paymentSend.Amount + paymentSend.ServiceFee);
-                await userManager.UpdateAsync(user);
+                if (paymentSend.StatusId == 3)
+                {
+                    user.Balance = user.Balance - Convert.ToDecimal(paymentSend.Amount + paymentSend.ServiceFee);
+                    await userManager.UpdateAsync(user);
+                }
             }
-
 
             if (!paymentServices.UpdatePaymentSend(paymentSend))
             {

@@ -84,7 +84,7 @@
 
                 <td>@Html.DisplayFor(p => item.ServiceFee)</td>
                 <td>@Html.DisplayFor(p => item.PPRemarks)</td>
-                <td><a href="@item.Attachment">@Html.DisplayFor(p => item.Attachment)</a></td>
+                <td><a asp-action="DownloadFile" asp-route-filename="@item.Attachment" name="filename">@Html.DisplayFor(p => item.Attachment)</a></td>
                 <td>
                     @if (item.StatusName == "Processing")
                     {

@@ -61,6 +61,7 @@
     <Folder Include="Compare" />
     <Folder Include="dbo\Views" />
     <Folder Include="DML" />
+    <Folder Include="dbo\Store Procedure" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Users.sql" />
@@ -68,6 +69,7 @@
     <Build Include="dbo\Tables\Statuses.sql" />
     <Build Include="dbo\Tables\Payments.sql" />
     <Build Include="dbo\Views\PaymentsStatusMerchant.sql" />
+    <Build Include="dbo\Store Procedure\GetPaymentsByDate.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Compare\Pay123Compare.scmp" />

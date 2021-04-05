@@ -104,6 +104,9 @@
     </Compile>
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\PaymentsStatusMerchant.cs" />
+    <Compile Include="Payment123DataSet.cs">
+      <DependentUpon>Payment123DataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Payment123DataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -170,7 +173,7 @@
     <EmbeddedResource Include="PaymentForm.resx">
       <DependentUpon>PaymentForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PaymentPosts.rdlc" />
+    <EmbeddedResource Include="paymentReport.rdlc" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -198,6 +201,7 @@
     <None Include="Payment123DataSet.xss">
       <DependentUpon>Payment123DataSet.xsd</DependentUpon>
     </None>
+    <None Include="Properties\DataSources\Pay123.Models.PaymentsStatusMerchant.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -225,6 +229,9 @@
     <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

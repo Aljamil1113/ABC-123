@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using PagedList;
+using System.Net;
 
 namespace Pay123
 {
@@ -95,22 +96,30 @@ namespace Pay123
 
         private async void Payment123_Load(object sender, EventArgs e)
         {
-            paymentLists = await LoadDataAsync();
+            try
+            {
+                paymentLists = await LoadDataAsync();
 
-            btnPreviousPayment.Enabled = paymentLists.HasPreviousPage;
-            btnNextPayment.Enabled = paymentLists.HasNextPage;
-            paymentDataGridView.DataSource = paymentLists.ToList();
-            paymentDataGridView.Columns["UserId"].Visible = false;
-            lblPagePayment.Text = string.Format("Page {0}/{1}", pageNumber, paymentLists.PageCount);
 
-            paymentDataGridView.Columns["ReferenceNumber"].HeaderText = "Reference #";
-            paymentDataGridView.Columns["MerchantName"].HeaderText = "Merchant";
-            paymentDataGridView.Columns["AccountNumber"].HeaderText = "Account Number";
-            paymentDataGridView.Columns["AccountName"].HeaderText = "Account Name";
-            paymentDataGridView.Columns["OtherDetails"].HeaderText = "Other Details";
-            paymentDataGridView.Columns["ServiceFee"].HeaderText = "Service Fee";
-            paymentDataGridView.Columns["PPRemarks"].HeaderText = "Remarks";
-            paymentDataGridView.Columns["StatusName"].HeaderText = "Status";
+                btnPreviousPayment.Enabled = paymentLists.HasPreviousPage;
+                btnNextPayment.Enabled = paymentLists.HasNextPage;
+                paymentDataGridView.DataSource = paymentLists.ToList();
+                paymentDataGridView.Columns["UserId"].Visible = false;
+                lblPagePayment.Text = string.Format("Page {0}/{1}", pageNumber, paymentLists.PageCount);
+
+                paymentDataGridView.Columns["ReferenceNumber"].HeaderText = "Reference #";
+                paymentDataGridView.Columns["MerchantName"].HeaderText = "Merchant";
+                paymentDataGridView.Columns["AccountNumber"].HeaderText = "Account Number";
+                paymentDataGridView.Columns["AccountName"].HeaderText = "Account Name";
+                paymentDataGridView.Columns["OtherDetails"].HeaderText = "Other Details";
+                paymentDataGridView.Columns["ServiceFee"].HeaderText = "Service Fee";
+                paymentDataGridView.Columns["PPRemarks"].HeaderText = "Remarks";
+                paymentDataGridView.Columns["StatusName"].HeaderText = "Status";
+            }
+            catch(WebException err)
+            {
+                MessageBox.Show(err.ToString(), "Error API", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
         }
 
