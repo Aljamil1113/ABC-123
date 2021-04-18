@@ -30,25 +30,35 @@ namespace Pay123
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource3 = new Microsoft.Reporting.WinForms.ReportDataSource();
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+            this.PaymentsStatusMerchantBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.Payment123DataSet = new Pay123.Payment123DataSet();
             this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
             this.lblFromDate = new System.Windows.Forms.Label();
             this.dtmFrom = new System.Windows.Forms.DateTimePicker();
             this.lblTo = new System.Windows.Forms.Label();
             this.dtmTo = new System.Windows.Forms.DateTimePicker();
             this.btnShow = new System.Windows.Forms.Button();
-            this.PaymentsStatusMerchantBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.Payment123DataSet = new Pay123.Payment123DataSet();
             this.PaymentsStatusMerchantTableAdapter = new Pay123.Payment123DataSetTableAdapters.PaymentsStatusMerchantTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.PaymentsStatusMerchantBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Payment123DataSet)).BeginInit();
             this.SuspendLayout();
             // 
+            // PaymentsStatusMerchantBindingSource
+            // 
+            this.PaymentsStatusMerchantBindingSource.DataMember = "PaymentsStatusMerchant";
+            this.PaymentsStatusMerchantBindingSource.DataSource = this.Payment123DataSet;
+            // 
+            // Payment123DataSet
+            // 
+            this.Payment123DataSet.DataSetName = "Payment123DataSet";
+            this.Payment123DataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
             // reportViewer1
             // 
-            reportDataSource3.Name = "DataSet1";
-            reportDataSource3.Value = this.PaymentsStatusMerchantBindingSource;
-            this.reportViewer1.LocalReport.DataSources.Add(reportDataSource3);
+            reportDataSource1.Name = "DataSet1";
+            reportDataSource1.Value = this.PaymentsStatusMerchantBindingSource;
+            this.reportViewer1.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer1.LocalReport.ReportEmbeddedResource = "Pay123.paymentReport.rdlc";
             this.reportViewer1.Location = new System.Drawing.Point(29, 62);
             this.reportViewer1.Name = "reportViewer1";
@@ -103,16 +113,6 @@ namespace Pay123
             this.btnShow.Text = "Show";
             this.btnShow.UseVisualStyleBackColor = false;
             this.btnShow.Click += new System.EventHandler(this.btnShow_Click);
-            // 
-            // PaymentsStatusMerchantBindingSource
-            // 
-            this.PaymentsStatusMerchantBindingSource.DataMember = "PaymentsStatusMerchant";
-            this.PaymentsStatusMerchantBindingSource.DataSource = this.Payment123DataSet;
-            // 
-            // Payment123DataSet
-            // 
-            this.Payment123DataSet.DataSetName = "Payment123DataSet";
-            this.Payment123DataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // PaymentsStatusMerchantTableAdapter
             // 

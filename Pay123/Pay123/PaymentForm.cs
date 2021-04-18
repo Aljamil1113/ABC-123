@@ -100,29 +100,39 @@ namespace Pay123
             payment.AccountName = txtAccountName.Text;
             payment.OtherDetails = txtOtherDetails.Text;
             payment.Amount = numAmount.Value;
-            payment.ServiceFee = ComputeServiceFee(numAmount.Value);
+            payment.ServiceFee = 0.00M;
             payment.PPRemarks = txtPPRemarks.Text;
             payment.StatusId = Convert.ToInt32(cmbStatuses.SelectedValue);
             payment.UserId = txtUserId.Text;
             payment.Attachment = txtAttachement.Text;
+            payment.ProcessedBy = GlobalUser.Username;
 
-            if(Convert.ToInt32(cmbStatuses.SelectedValue) == 3)
+
+            if (Convert.ToInt32(cmbStatuses.SelectedValue) == 3)
             {
-                var payFromDb = db.Payments.Any(p => p.ReferenceNumber == payment.ReferenceNumber);
+                payment.ServiceFee = ComputeServiceFee(numAmount.Value);
+                //var payFromDb = db.Payments.Any(p => p.ReferenceNumber == payment.ReferenceNumber);
 
-                if (payFromDb == true)
-                {
-                    MessageBox.Show("This record is already save to database.", "Duplicate Record Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else
-                {
-                    payment.ProcessedBy = GlobalUser.Username;
-                    db.Payments.Add(payment);
-                    await db.SaveChangesAsync();
-                }
+                //if (payFromDb == true)
+                //{
+                //    MessageBox.Show("This record is already save to database.", "Duplicate Record Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //}
+                //else
+                //{
+                //    payment.ProcessedBy = GlobalUser.Username;
+                //    db.Payments.Add(payment);
+                //    await db.SaveChangesAsync();
+                //}
             }
 
             await RestService.EditPaymentSend(payment);
+
+            await db.Database.ExecuteSqlCommandAsync("exec spEditPayment {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}",
+                    payment.ReferenceNumber, payment.Date, payment.AccountNumber, payment.AccountName,
+                    payment.OtherDetails, payment.Amount, payment.ServiceFee, payment.PPRemarks, payment.Client,
+                    payment.Customer, payment.MerchantId, payment.StatusId, payment.Attachment, payment.ProcessedBy);
+
+            await db.SaveChangesAsync();
 
             this.Close();
         }

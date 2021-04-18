@@ -149,7 +149,6 @@
       <DependentUpon>RegisterUser.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\GlobalUser.cs" />
-    <Compile Include="Services\IRestService.cs" />
     <Compile Include="Services\RestService.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="SuccessPaymentsForm.cs">

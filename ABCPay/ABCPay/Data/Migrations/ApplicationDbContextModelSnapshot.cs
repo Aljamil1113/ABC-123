@@ -78,6 +78,9 @@ namespace ABCPay.Data.Migrations
                     b.Property<string>("PPRemarks")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ProcessedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal?>("ServiceFee")
                         .HasColumnType("decimal(18,2)");
 

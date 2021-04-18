@@ -19,6 +19,7 @@ using ABCPay.Models.ViewModels;
 using ABCPay.Data;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
+using ABCPay.Models.Payment123Db;
 
 namespace ABCPay
 {
@@ -41,6 +42,9 @@ namespace ABCPay
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<Payment123Context>();
+
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
@@ -48,7 +52,6 @@ namespace ABCPay
 
 
             services.AddScoped<IDbInitializer, DbInitializer>();
-
             services.AddScoped<IPaymentServices, PaymentServices>();
         }
 

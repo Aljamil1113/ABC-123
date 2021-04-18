@@ -70,6 +70,9 @@
     <Build Include="dbo\Tables\Payments.sql" />
     <Build Include="dbo\Views\PaymentsStatusMerchant.sql" />
     <Build Include="dbo\Store Procedure\GetPaymentsByDate.sql" />
+    <Build Include="dbo\Store Procedure\spAddPayment.sql" />
+    <Build Include="dbo\Store Procedure\spEditPayment.sql" />
+    <Build Include="dbo\Store Procedure\spDeletePayment.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Compare\Pay123Compare.scmp" />

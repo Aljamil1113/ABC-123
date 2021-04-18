@@ -18,6 +18,8 @@ namespace Pay123.Data
         public virtual DbSet<Status> Statuses { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
+        public virtual DbSet<PaymentsStatusMerchant> PaymentViews { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
         }

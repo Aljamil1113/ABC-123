@@ -370,7 +370,7 @@ namespace Pay123
             // 
             // txtUserId
             // 
-            this.txtUserId.Location = new System.Drawing.Point(607, 466);
+            this.txtUserId.Location = new System.Drawing.Point(606, 466);
             this.txtUserId.Name = "txtUserId";
             this.txtUserId.Size = new System.Drawing.Size(207, 24);
             this.txtUserId.TabIndex = 28;

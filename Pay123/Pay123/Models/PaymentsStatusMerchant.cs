@@ -49,7 +49,8 @@ namespace Pay123.Models
 
         [StringLength(450)]
         public string UserId { get; set; }
-
         public string Attachment { get; set; }
+
+
     }
 }

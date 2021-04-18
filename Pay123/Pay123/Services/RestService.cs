@@ -13,7 +13,8 @@ namespace Pay123.Services
 {
     public static class RestService
     {
-        private static readonly string baseURL = "https://localhost:44324/api/";
+        private static readonly string baseURL = "https://localhost:44324/api/";   
+
         public static async Task<IEnumerable<PaymentsStatusMerchant>> GetPayments()
         {
             var payments = new List<PaymentsStatusMerchant>();
@@ -34,6 +35,10 @@ namespace Pay123.Services
 
                         payments = responseAsPayments;
                     }
+                    else
+                    {
+                        MessageBox.Show("Error Connection", "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
 
                 }
 
@@ -51,18 +56,32 @@ namespace Pay123.Services
         
         public static async Task EditPaymentSend(Payment payment)
         {
-            using (var client = new HttpClient())
+            try
             {
-                client.BaseAddress = new Uri(baseURL);
-
-                var response = await client.PutAsync($"paymentsend/{payment.ReferenceNumber}", new StringContent(
-                        JsonConvert.SerializeObject(payment), Encoding.UTF8, "application/json"));
-
-                if (response.IsSuccessStatusCode)
+                using (var client = new HttpClient())
                 {
-                    MessageBox.Show($"Successfully update record Ref #: {payment.ReferenceNumber}.", "Save Record", MessageBoxButtons.OK, MessageBoxIcon.Information); ;
+                    client.BaseAddress = new Uri(baseURL);
+
+                    var response = await client.PutAsync($"paymentsend/{payment.ReferenceNumber}", new StringContent(
+                            JsonConvert.SerializeObject(payment), Encoding.UTF8, "application/json"));
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show($"Successfully update record Ref #: {payment.ReferenceNumber}.", "Save Record", MessageBoxButtons.OK, MessageBoxIcon.Information); ;
+                    }
+
+                    else
+                    {
+                        MessageBox.Show("Error Connection", "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
+            catch (WebException err)
+            {
+
+                MessageBox.Show(err.ToString(), "Error API", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
         }
     }
 }

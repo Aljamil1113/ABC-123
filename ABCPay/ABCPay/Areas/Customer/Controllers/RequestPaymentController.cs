@@ -1,5 +1,6 @@
 ﻿using ABCPay.Data;
 using ABCPay.Models;
+using ABCPay.Models.Payment123Db;
 using ABCPay.Models.ViewModels;
 using ABCPay.Models.Views;
 using ABCPay.Services;
@@ -25,15 +26,17 @@ namespace ABCPay.Areas.Customer.Controllers
     public class RequestPaymentController : Controller
     {
         private readonly ApplicationDbContext db;
+        private readonly Payment123Context backDb;
         private int PageSize = 10;
 
         public int MyProperty { get; set; }
 
         [BindProperty]
         public PaymentMerchantViewModel PaymentVM { get; set; }
-        public RequestPaymentController(ApplicationDbContext _db)
+        public RequestPaymentController(ApplicationDbContext _db, Payment123Context _backDb)
         {
             db = _db;
+            backDb = _backDb;
             PaymentVM = new PaymentMerchantViewModel()
             {
                 Merchants = db.Merchants.ToList(),
@@ -152,11 +155,23 @@ namespace ABCPay.Areas.Customer.Controllers
                 PaymentVM.Payments.StatusId = 1;
 
                 db.Payments.Add(PaymentVM.Payments);
+
+                await backDb.Database.ExecuteSqlRawAsync("exec spAddPayment {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}",
+                    PaymentVM.Payments.ReferenceNumber, PaymentVM.Payments.Date, PaymentVM.Payments.AccountNumber, PaymentVM.Payments.AccountName,
+                    PaymentVM.Payments.OtherDetails, PaymentVM.Payments.Amount, PaymentVM.Payments.ServiceFee, PaymentVM.Payments.PPRemarks, client,
+                    user.FirstName + " " + user.LastName, PaymentVM.Payments.MerchantId, PaymentVM.Payments.StatusId, PaymentVM.Payments.Attachment,
+                    PaymentVM.Payments.ProcessedBy);
             }
 
             else
             {
                 db.Payments.Update(PaymentVM.Payments);
+
+                await backDb.Database.ExecuteSqlRawAsync("exec spEditPayment {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}",
+                    PaymentVM.Payments.ReferenceNumber, PaymentVM.Payments.Date, PaymentVM.Payments.AccountNumber, PaymentVM.Payments.AccountName,
+                    PaymentVM.Payments.OtherDetails, PaymentVM.Payments.Amount, PaymentVM.Payments.ServiceFee, PaymentVM.Payments.PPRemarks, client,
+                    user.FirstName + " " + user.LastName, PaymentVM.Payments.MerchantId, PaymentVM.Payments.StatusId, PaymentVM.Payments.Attachment,
+                    PaymentVM.Payments.ProcessedBy);
             }
 
             await db.SaveChangesAsync();
@@ -204,7 +219,9 @@ namespace ABCPay.Areas.Customer.Controllers
                             AccountName = worksheet.Cells[row, 3].Value.ToString(),
                             OtherDetails = worksheet.Cells[row, 4].Value.ToString(),
                             Amount = Convert.ToDecimal(worksheet.Cells[row, 5].Value),
-                            StatusId = Convert.ToInt32(worksheet.Cells[row, 6].Value)
+                            StatusId = Convert.ToInt32(worksheet.Cells[row, 6].Value),
+                            Attachment = null,
+                            ProcessedBy = null
                         });
 
                     }
@@ -214,6 +231,16 @@ namespace ABCPay.Areas.Customer.Controllers
             if(ModelState.IsValid)
             {
                 db.Payments.AddRange(listPayments);
+
+
+                foreach (Payment payment in listPayments)
+                {
+                    await backDb.Database.ExecuteSqlRawAsync("exec spAddPayment {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}",
+                    payment.ReferenceNumber, payment.Date, payment.AccountNumber, payment.AccountName, payment.OtherDetails, payment.Amount, payment.ServiceFee, 
+                    payment.PPRemarks, payment.Client, payment.Customer, payment.MerchantId, payment.StatusId, payment.Attachment, payment.ProcessedBy);
+                }
+
+
                 await db.SaveChangesAsync();
             }
             return RedirectToAction("Index", "RequestPayment");
@@ -242,6 +269,7 @@ namespace ABCPay.Areas.Customer.Controllers
         {
             var payment = await db.Payments.Where(p => p.ReferenceNumber == id).SingleOrDefaultAsync();
             db.Payments.Remove(payment);
+            await backDb.Database.ExecuteSqlRawAsync("exec spDeletePayment {0}", payment.ReferenceNumber);
             await db.SaveChangesAsync();
             return RedirectToAction("Index", "RequestPayment");
         }

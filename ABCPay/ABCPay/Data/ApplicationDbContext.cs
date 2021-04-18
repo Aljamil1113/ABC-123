@@ -21,6 +21,7 @@ namespace ABCPay.Data
         public DbSet<Status> Statuses { get; set; }
         public DbSet<Payment> Payments { get; set; }
 
+        //Table Views
         public DbSet<PaymentMS> PaymentMSs { get; set; }
 
     }

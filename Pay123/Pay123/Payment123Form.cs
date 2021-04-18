@@ -99,7 +99,7 @@ namespace Pay123
             try
             {
                 paymentLists = await LoadDataAsync();
-
+                
 
                 btnPreviousPayment.Enabled = paymentLists.HasPreviousPage;
                 btnNextPayment.Enabled = paymentLists.HasNextPage;

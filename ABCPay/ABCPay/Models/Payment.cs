@@ -73,5 +73,7 @@ namespace ABCPay.Models
         public virtual ApplicationUser ApplicationUser { get; set; }
 
         public string Attachment { get; set; }
+
+        public string ProcessedBy { get; set; }
     }
 }

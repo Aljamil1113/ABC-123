@@ -52,7 +52,8 @@ namespace ABCPay.Controllers.Api
                     MerchantName = item.MerchantName,
                     StatusName = item.StatusName,
                     UserId = item.UserId,
-                    Attachment = item.Attachment
+                    Attachment = item.Attachment,
+                    ProcessedBy = item.ProcessedBy
                 });
             }
 
